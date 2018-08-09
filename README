@@ -1,0 +1,48 @@
+X extension wrangler
+====================
+
+X Extension Wrangler (XEW) is a cross-platform open-source C/C++ extension
+loading wrangler for lowe level graphical libraries, such as X11, XCB, XKB
+and others. This allows to avoid application to be linked against those
+libraries by doing runtime open of dynamic libraries. This allows to have
+software which can gracefully handle situations when it is running in the
+headless mode, or to choose library they want to use based on what is installed
+on the system.
+
+Real usecases which are planned to be addressed with this library:
+
+- Software which can either run in headed and headless mode. Using this
+  wrangler allows to run software on  compute farms of all sorts.
+
+- Detect whether native display manager is X11 or Wayland, and use that
+  protocol.
+
+COVERED LIBRARIES
+=================
+
+Currently following libraries are covered by this wrangler:
+
+- X11 (only subset).
+- XCB
+- xkbcommon
+
+LIMITATIONS
+===========
+
+- Only limited set of headers from X11 are covered.
+- All functions with varargs (...) are not covered yet.
+
+LICENSE
+=======
+
+X Extension Wrangler library itself is released under the MIT license.
+
+This project is heavily inspired by more decoupled wranglers/experiments
+like X11ew [1] and xcbew [1], with heavily rewritten/generalized automation
+script.
+
+The code of libraries which are being wrangled are distributed under their own
+licenses.
+
+[1] https://github.com/X11Wrangler/X11ew
+[2] https://github.com/XCBWrangler/xcbew
