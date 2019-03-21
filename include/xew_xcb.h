@@ -7001,6 +7001,65 @@ typedef xcb_void_cookie_t (*txcb_no_operation)(xcb_connection_t* c);
 xcb_void_cookie_t xcb_no_operation(xcb_connection_t* c);
 
 ////////////////////////////////////////////////////////////////////////////////
+// xcb_keysyms.h
+
+typedef struct _XCBKeySymbols xcb_key_symbols_t;
+typedef xcb_key_symbols_t* (*txcb_key_symbols_alloc)(xcb_connection_t* c);
+xcb_key_symbols_t* xcb_key_symbols_alloc(xcb_connection_t* c);
+typedef void (*txcb_key_symbols_free)(xcb_key_symbols_t* syms);
+void xcb_key_symbols_free(xcb_key_symbols_t* syms);
+typedef xcb_keysym_t (*txcb_key_symbols_get_keysym)(
+    xcb_key_symbols_t* syms,
+    xcb_keycode_t keycode,
+    int col);
+xcb_keysym_t xcb_key_symbols_get_keysym(
+    xcb_key_symbols_t* syms,
+    xcb_keycode_t keycode,
+    int col);
+typedef xcb_keycode_t* (*txcb_key_symbols_get_keycode)(
+    xcb_key_symbols_t* syms,
+    xcb_keysym_t keysym);
+xcb_keycode_t* xcb_key_symbols_get_keycode(
+    xcb_key_symbols_t* syms,
+    xcb_keysym_t keysym);
+typedef xcb_keysym_t (*txcb_key_press_lookup_keysym)(
+    xcb_key_symbols_t* syms,
+    xcb_key_press_event_t* event,
+    int col);
+xcb_keysym_t xcb_key_press_lookup_keysym(
+    xcb_key_symbols_t* syms,
+    xcb_key_press_event_t* event,
+    int col);
+typedef xcb_keysym_t (*txcb_key_release_lookup_keysym)(
+    xcb_key_symbols_t* syms,
+    xcb_key_release_event_t* event,
+    int col);
+xcb_keysym_t xcb_key_release_lookup_keysym(
+    xcb_key_symbols_t* syms,
+    xcb_key_release_event_t* event,
+    int col);
+typedef int (*txcb_refresh_keyboard_mapping)(
+    xcb_key_symbols_t* syms,
+    xcb_mapping_notify_event_t* event);
+int xcb_refresh_keyboard_mapping(
+    xcb_key_symbols_t* syms,
+    xcb_mapping_notify_event_t* event);
+typedef int (*txcb_is_keypad_key)(xcb_keysym_t keysym);
+int xcb_is_keypad_key(xcb_keysym_t keysym);
+typedef int (*txcb_is_private_keypad_key)(xcb_keysym_t keysym);
+int xcb_is_private_keypad_key(xcb_keysym_t keysym);
+typedef int (*txcb_is_cursor_key)(xcb_keysym_t keysym);
+int xcb_is_cursor_key(xcb_keysym_t keysym);
+typedef int (*txcb_is_pf_key)(xcb_keysym_t keysym);
+int xcb_is_pf_key(xcb_keysym_t keysym);
+typedef int (*txcb_is_function_key)(xcb_keysym_t keysym);
+int xcb_is_function_key(xcb_keysym_t keysym);
+typedef int (*txcb_is_misc_function_key)(xcb_keysym_t keysym);
+int xcb_is_misc_function_key(xcb_keysym_t keysym);
+typedef int (*txcb_is_modifier_key)(xcb_keysym_t keysym);
+int xcb_is_modifier_key(xcb_keysym_t keysym);
+
+////////////////////////////////////////////////////////////////////////////////
 // Functors declarations.
 
 // xcb.h
@@ -7649,13 +7708,42 @@ extern txcb_get_modifier_mapping_reply xcb_get_modifier_mapping_reply_impl;
 extern txcb_no_operation_checked xcb_no_operation_checked_impl;
 extern txcb_no_operation xcb_no_operation_impl;
 
+// xcb_keysyms.h
+extern txcb_key_symbols_alloc xcb_key_symbols_alloc_impl;
+extern txcb_key_symbols_free xcb_key_symbols_free_impl;
+extern txcb_key_symbols_get_keysym xcb_key_symbols_get_keysym_impl;
+extern txcb_key_symbols_get_keycode xcb_key_symbols_get_keycode_impl;
+extern txcb_key_press_lookup_keysym xcb_key_press_lookup_keysym_impl;
+extern txcb_key_release_lookup_keysym xcb_key_release_lookup_keysym_impl;
+extern txcb_refresh_keyboard_mapping xcb_refresh_keyboard_mapping_impl;
+extern txcb_is_keypad_key xcb_is_keypad_key_impl;
+extern txcb_is_private_keypad_key xcb_is_private_keypad_key_impl;
+extern txcb_is_cursor_key xcb_is_cursor_key_impl;
+extern txcb_is_pf_key xcb_is_pf_key_impl;
+extern txcb_is_function_key xcb_is_function_key_impl;
+extern txcb_is_misc_function_key xcb_is_misc_function_key_impl;
+extern txcb_is_modifier_key xcb_is_modifier_key_impl;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Wrangler.
 
 XewErrorCode xewXCBInit(void);
 
-// CHeck whether given function is available.
+// Check whether given function is available.
 #define XCB_HAS_SYMBOL(symbol) (XEW_HAS_SYMBOL_IMPL(symbol))
+
+////////////////////////////////////////////////////////////////////////////////
+// Variadic functions
+//
+// NOTE: Those can not be used as a fully transparent DL_PRELOAD replacement for
+// the real ones, since we can not pass variadic arguments from one function to
+// another.
+// This means, to use those the application eeds to be actually complied using
+// this header file.
+
+#ifndef XEW_IMPL
+
+#endif  // XEW_IMPL
 
 #ifdef __cplusplus
 }

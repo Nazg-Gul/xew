@@ -3191,8 +3191,24 @@ extern txkb_compose_state_get_one_sym xkb_compose_state_get_one_sym_impl;
 
 XewErrorCode xewXKBCommonInit(void);
 
-// CHeck whether given function is available.
+// Check whether given function is available.
 #define XKBCOMMON_HAS_SYMBOL(symbol) (XEW_HAS_SYMBOL_IMPL(symbol))
+
+////////////////////////////////////////////////////////////////////////////////
+// Variadic functions
+//
+// NOTE: Those can not be used as a fully transparent DL_PRELOAD replacement for
+// the real ones, since we can not pass variadic arguments from one function to
+// another.
+// This means, to use those the application eeds to be actually complied using
+// this header file.
+
+#ifndef XEW_IMPL
+// xkbcommon.h
+#  define xkb_state_mod_names_are_active xkb_state_mod_names_are_active_impl
+#  define xkb_state_mod_indices_are_active xkb_state_mod_indices_are_active_impl
+
+#endif  // XEW_IMPL
 
 #ifdef __cplusplus
 }

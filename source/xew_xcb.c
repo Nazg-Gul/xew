@@ -20,22 +20,27 @@
 //
 // Author: Sergey Sharybin (sergey.vfx@gmail.com)
 
+#define XEW_IMPL
+
 #include "xew_xcb.h"
 
 #include "xew_util.h"
 
 // Per-platform list of libraries to be queried/
 #ifdef _WIN32
-static const char* xcb_paths[] = {NULL};
+static const char* xcb_paths[] = {NULL};static const char* xcb_keysyms_paths[] = {NULL};
 #elif defined(__APPLE__)
-static const char* xcb_paths[] = {NULL};
+static const char* xcb_paths[] = {NULL};static const char* xcb_keysyms_paths[] = {NULL};
 #else
 static const char* xcb_paths[] = {"libxcb.so.1",
                                   "libxcb.so",
-                                  NULL};
+                                  NULL};static const char* xcb_keysyms_paths[] = {"libxcb-keysyms.so.1",
+                                          "libxcb-keysyms.so",
+                                          NULL};
 #endif
 
 static DynamicLibrary* xcb_lib = NULL;
+static DynamicLibrary* xcb_keysyms_lib = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functor definitions.
@@ -685,6 +690,22 @@ txcb_get_modifier_mapping_keycodes_end xcb_get_modifier_mapping_keycodes_end_imp
 txcb_get_modifier_mapping_reply xcb_get_modifier_mapping_reply_impl;
 txcb_no_operation_checked xcb_no_operation_checked_impl;
 txcb_no_operation xcb_no_operation_impl;
+
+// xcb_keysyms.h
+txcb_key_symbols_alloc xcb_key_symbols_alloc_impl;
+txcb_key_symbols_free xcb_key_symbols_free_impl;
+txcb_key_symbols_get_keysym xcb_key_symbols_get_keysym_impl;
+txcb_key_symbols_get_keycode xcb_key_symbols_get_keycode_impl;
+txcb_key_press_lookup_keysym xcb_key_press_lookup_keysym_impl;
+txcb_key_release_lookup_keysym xcb_key_release_lookup_keysym_impl;
+txcb_refresh_keyboard_mapping xcb_refresh_keyboard_mapping_impl;
+txcb_is_keypad_key xcb_is_keypad_key_impl;
+txcb_is_private_keypad_key xcb_is_private_keypad_key_impl;
+txcb_is_cursor_key xcb_is_cursor_key_impl;
+txcb_is_pf_key xcb_is_pf_key_impl;
+txcb_is_function_key xcb_is_function_key_impl;
+txcb_is_misc_function_key xcb_is_misc_function_key_impl;
+txcb_is_modifier_key xcb_is_modifier_key_impl;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4028,6 +4049,63 @@ xcb_void_cookie_t xcb_no_operation(xcb_connection_t* c) {
   return xcb_no_operation_impl(c);
 }
 
+// xcb_keysyms.h
+xcb_key_symbols_t* xcb_key_symbols_alloc(xcb_connection_t* c) {
+  return xcb_key_symbols_alloc_impl(c);
+}
+
+void xcb_key_symbols_free(xcb_key_symbols_t* syms) {
+  return xcb_key_symbols_free_impl(syms);
+}
+
+xcb_keysym_t xcb_key_symbols_get_keysym(xcb_key_symbols_t* syms, xcb_keycode_t keycode, int col) {
+  return xcb_key_symbols_get_keysym_impl(syms, keycode, col);
+}
+
+xcb_keycode_t* xcb_key_symbols_get_keycode(xcb_key_symbols_t* syms, xcb_keysym_t keysym) {
+  return xcb_key_symbols_get_keycode_impl(syms, keysym);
+}
+
+xcb_keysym_t xcb_key_press_lookup_keysym(xcb_key_symbols_t* syms, xcb_key_press_event_t* event, int col) {
+  return xcb_key_press_lookup_keysym_impl(syms, event, col);
+}
+
+xcb_keysym_t xcb_key_release_lookup_keysym(xcb_key_symbols_t* syms, xcb_key_release_event_t* event, int col) {
+  return xcb_key_release_lookup_keysym_impl(syms, event, col);
+}
+
+int xcb_refresh_keyboard_mapping(xcb_key_symbols_t* syms, xcb_mapping_notify_event_t* event) {
+  return xcb_refresh_keyboard_mapping_impl(syms, event);
+}
+
+int xcb_is_keypad_key(xcb_keysym_t keysym) {
+  return xcb_is_keypad_key_impl(keysym);
+}
+
+int xcb_is_private_keypad_key(xcb_keysym_t keysym) {
+  return xcb_is_private_keypad_key_impl(keysym);
+}
+
+int xcb_is_cursor_key(xcb_keysym_t keysym) {
+  return xcb_is_cursor_key_impl(keysym);
+}
+
+int xcb_is_pf_key(xcb_keysym_t keysym) {
+  return xcb_is_pf_key_impl(keysym);
+}
+
+int xcb_is_function_key(xcb_keysym_t keysym) {
+  return xcb_is_function_key_impl(keysym);
+}
+
+int xcb_is_misc_function_key(xcb_keysym_t keysym) {
+  return xcb_is_misc_function_key_impl(keysym);
+}
+
+int xcb_is_modifier_key(xcb_keysym_t keysym) {
+  return xcb_is_modifier_key_impl(keysym);
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4053,6 +4131,10 @@ static XewErrorCode installAtExitHandler(void) {
 static XewErrorCode openLibraries() {
   xcb_lib = xew_dynamic_library_open_find(xcb_paths);
   if (xcb_lib == NULL) {
+    return XEW_ERROR_OPEN_FAILED;
+  }
+  xcb_keysyms_lib = xew_dynamic_library_open_find(xcb_keysyms_paths);
+  if (xcb_keysyms_lib == NULL) {
     return XEW_ERROR_OPEN_FAILED;
   }
   return XEW_SUCCESS;
@@ -4703,6 +4785,21 @@ static void fetchPointersFromLibrary(void) {
   _LIBRARY_FIND_IMPL(xcb_lib, xcb_get_modifier_mapping_reply);
   _LIBRARY_FIND_IMPL(xcb_lib, xcb_no_operation_checked);
   _LIBRARY_FIND_IMPL(xcb_lib, xcb_no_operation);
+  // xcb_keysyms.h
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_symbols_alloc);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_symbols_free);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_symbols_get_keysym);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_symbols_get_keycode);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_press_lookup_keysym);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_release_lookup_keysym);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_refresh_keyboard_mapping);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_keypad_key);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_private_keypad_key);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_cursor_key);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_pf_key);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_function_key);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_misc_function_key);
+  _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_modifier_key);
 }
 
 XewErrorCode xewXCBInit(void) {

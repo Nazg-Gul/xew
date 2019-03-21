@@ -30,7 +30,9 @@ LIMITATIONS
 ===========
 
 - Only limited set of headers from X11 are covered.
-- All functions with varargs (...) are not covered yet.
+- All functions with varargs (...) are only supported as a macros.
+  This means, if those functions are used the wrangler library can not be
+  used as a transparent LD_PRELOAD replacement for an actual X libraries.
 
 LICENSE
 =======

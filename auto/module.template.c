@@ -20,6 +20,8 @@
 //
 // Author: Sergey Sharybin (sergey.vfx@gmail.com)
 
+#define XEW_IMPL
+
 #include "xew_%module_name%.h"
 
 #include "xew_util.h"

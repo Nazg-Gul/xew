@@ -25,6 +25,7 @@
 
 #include "xew.h"
 
+#include <X11/keysym.h>
 #include <X11/Xatom.h>
 #include <X11/XKBlib.h>
 #include <X11/Xlib.h>
@@ -2764,8 +2765,33 @@ extern tXkbUpdateKeyTypeVirtualMods XkbUpdateKeyTypeVirtualMods_impl;
 
 XewErrorCode xewX11Init(void);
 
-// CHeck whether given function is available.
+// Check whether given function is available.
 #define X11_HAS_SYMBOL(symbol) (XEW_HAS_SYMBOL_IMPL(symbol))
+
+////////////////////////////////////////////////////////////////////////////////
+// Variadic functions
+//
+// NOTE: Those can not be used as a fully transparent DL_PRELOAD replacement for
+// the real ones, since we can not pass variadic arguments from one function to
+// another.
+// This means, to use those the application eeds to be actually complied using
+// this header file.
+
+#ifndef XEW_IMPL
+// Xlib.h
+#  define XSetOMValues XSetOMValues_impl
+#  define XGetOMValues XGetOMValues_impl
+#  define XCreateOC XCreateOC_impl
+#  define XSetOCValues XSetOCValues_impl
+#  define XGetOCValues XGetOCValues_impl
+#  define XGetIMValues XGetIMValues_impl
+#  define XSetIMValues XSetIMValues_impl
+#  define XCreateIC XCreateIC_impl
+#  define XSetICValues XSetICValues_impl
+#  define XGetICValues XGetICValues_impl
+#  define XVaCreateNestedList XVaCreateNestedList_impl
+
+#endif  // XEW_IMPL
 
 #ifdef __cplusplus
 }

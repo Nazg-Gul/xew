@@ -63,18 +63,26 @@ typedef void* DynamicLibrary;
 #define IMPL_SUFFIX _XEW_IMPL_SUFFIX
 
 // Used for sumbols which must exist.
-#define _LIBRARY_FIND_CHECKED(lib, name) \
-        name = (t##name)dynamic_library_find(lib, #name); \
-        assert(name);
-#define _LIBRARY_FIND_IMPL_CHECKED(lib, name) \
-        GLUE(name, IMPL_SUFFIX) = (t##name)dynamic_library_find(lib, #name); \
-        assert(GLUE(name, IMPL_SUFFIX));
+#define _LIBRARY_FIND_CHECKED(lib, name)                     \
+        do {                                                 \
+          name = (t##name)dynamic_library_find(lib, #name);  \
+          assert(name);                                      \
+        } while (0)
+#define _LIBRARY_FIND_IMPL_CHECKED(lib, name)                                  \
+        do {                                                                   \
+          GLUE(name, IMPL_SUFFIX) = (t##name)dynamic_library_find(lib, #name); \
+          assert(GLUE(name, IMPL_SUFFIX));                                     \
+        } while (0)
 
 // Used for symbols which might miss in te library.
-#define _LIBRARY_FIND(lib, name) \
-        name = (t##name)dynamic_library_find(lib, #name);
-#define _LIBRARY_FIND_IMPL(lib, name) \
-        GLUE(name, IMPL_SUFFIX) = (t##name)dynamic_library_find(lib, #name);
+#define _LIBRARY_FIND(lib, name)                             \
+        do {                                                 \
+          name = (t##name)dynamic_library_find(lib, #name);  \
+        } while (0)
+#define _LIBRARY_FIND_IMPL(lib, name)                                          \
+        do {                                                                   \
+          GLUE(name, IMPL_SUFFIX) = (t##name)dynamic_library_find(lib, #name); \
+        } while (0)
 
 DynamicLibrary xew_dynamic_library_open_find(const char** paths);
 

@@ -64,11 +64,19 @@ MODULES = (
      "xcb": {
        "paths": {"linux": ("libxcb.so.1", "libxcb.so")},
        "required": True,
+       "headers": ("xcb.h",
+                   "xproto.h"),
+     },
+     "xcb_keysyms": {
+       "paths": {"linux": ("libxcb-keysyms.so.1", "libxcb-keysyms.so")},
+       "required": True,
+       "headers": ("xcb_keysyms.h",)
      },
    },
    "include_directory": "/usr/include/xcb",
    "headers": ("xcb.h",
-               "xproto.h"),
+               "xproto.h",
+               "xcb_keysyms.h"),
    "extra_wrangler_includes": ("stdarg.h",
                                "stdio.h",
                                "stdint.h",
@@ -96,7 +104,8 @@ MODULES = (
                "Xlib-xcb.h",
                "Xlibint.h",
                "XKBlib.h"),
-   "extra_wrangler_includes": ("X11/Xatom.h",
+   "extra_wrangler_includes": ("X11/keysym.h",
+                               "X11/Xatom.h",
                                "X11/XKBlib.h",
                                "X11/Xlib.h",
                                "X11/Xlibint.h"),
@@ -622,6 +631,7 @@ def extract_argument_name(argument):
         return re.sub("^\(\*([A-Za-z0-9_]+).*", "\\1", t)
     return "MISSING_ARGUMENT"
 
+
 def generate_function_wrapper(function):
     if check_function_has_varargs(function):
         return ""
@@ -648,6 +658,28 @@ def generate_function_wrappers(module_context):
         result += "// " + filename + "\n"
         for function in functions:
             result += generate_function_wrapper(function)
+    return result
+
+
+def generate_vararg_function_wrapper(function):
+    if not check_function_has_varargs(function):
+        return ""
+    return "#  define {} {}_impl\n" . format(function.name, function.name)
+
+
+def generate_vararg_function_wrappers(module_context):
+    result = ""
+    for filename, functions in module_context.functions.iteritems():
+        if not functions:
+            continue
+        file_result = ""
+        for function in functions:
+            current_result = generate_vararg_function_wrapper(function)
+            if filename and not file_result and current_result:
+                file_result = "// " + filename + "\n" + current_result
+            else:
+                file_result += current_result
+        result += file_result
     return result
 
 
@@ -1393,6 +1425,8 @@ def write_wrangler_to_files(module_context):
             combine_all_functor_declarations(module_context),
         "FUNCTOR_DEFINITIONS": combine_all_functor_definitions(module_context),
         "FUNCTION_WRAPPERS": generate_function_wrappers(module_context),
+        "VARARG_FUNCTION_WRAPPERS": generate_vararg_function_wrappers(
+                module_context),
         "EXTRA_INCLUDES": construct_extra_wrangler_includes(module_context),
         "EXTRA_CODE": module["extra_wrangler_code"],
         "LIBRARY_PATHS": generate_libraries_list_code(module),

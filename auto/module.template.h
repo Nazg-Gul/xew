@@ -41,8 +41,21 @@ extern "C" {
 
 XewErrorCode xew%ModuleName%Init(void);
 
-// CHeck whether given function is available.
+// Check whether given function is available.
 #define %MODULE_NAME%_HAS_SYMBOL(symbol) (%SYMBOL_CHECK%(symbol))
+
+////////////////////////////////////////////////////////////////////////////////
+// Variadic functions
+//
+// NOTE: Those can not be used as a fully transparent DL_PRELOAD replacement for
+// the real ones, since we can not pass variadic arguments from one function to
+// another.
+// This means, to use those the application eeds to be actually complied using
+// this header file.
+
+#ifndef XEW_IMPL
+%VARARG_FUNCTION_WRAPPERS%
+#endif  // XEW_IMPL
 
 #ifdef __cplusplus
 }
