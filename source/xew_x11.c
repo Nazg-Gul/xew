@@ -3156,9 +3156,11 @@ void _XProcessInternalConnection(Display* dpy, struct _XConnectionInfo* conn_inf
   return _XProcessInternalConnection_impl(dpy, conn_info);
 }
 
+#if defined(__UNIXOS2__)
 char* __XOS2RedirRoot(char* arg) {
   return __XOS2RedirRoot_impl(arg);
 }
+#endif
 
 int _XTextHeight(XFontStruct* font_struct, _Xconst char* string, int count) {
   return _XTextHeight_impl(font_struct, string, count);

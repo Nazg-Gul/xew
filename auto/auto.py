@@ -518,6 +518,8 @@ def wrap_code_with_ifdef(function_name, code):
                          "_XFopenFile",
                          "_XAccessFile"):
         return "#if defined(WIN32)\n" + code + "#endif\n"
+    elif function_name in ("__XOS2RedirRoot", ):
+        return "#if defined(__UNIXOS2__)\n" + code + "#endif\n"
     elif function_name == "Data":
         return "#ifdef DataRoutineIsProcedure\n" + code + "#endif\n"
     return code
