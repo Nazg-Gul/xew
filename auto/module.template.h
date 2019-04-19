@@ -25,12 +25,13 @@
 
 #include "xew.h"
 
-%EXTRA_INCLUDES%%EXTRA_CODE%
+%EXTRA_INCLUDES%
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+%EXTRA_CODE%
 %FILE_STRUCTURE%
 ////////////////////////////////////////////////////////////////////////////////
 // Functors declarations.

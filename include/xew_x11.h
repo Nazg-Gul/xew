@@ -30,6 +30,12 @@
 #include <X11/XKBlib.h>
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 // min/max conflicts with STL includes.
 
 #undef min
@@ -44,11 +50,6 @@ enum XEventQueueOwner {
 // Since thw whole header is ignored, we manually define symbols from it.
 xcb_connection_t* XGetXCBConnection(Display* dpy);
 void XSetEventQueueOwner(Display* dpy, enum XEventQueueOwner owner);
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef int (*t_Xmblen)(char* str, int len);
 typedef XFontStruct* (*tXLoadQueryFont)(Display* display, _Xconst char* name);
 typedef XFontStruct* (*tXQueryFont)(Display* display, XID font_ID);
