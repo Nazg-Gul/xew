@@ -669,6 +669,84 @@ tXkbApplyVirtualModChanges XkbApplyVirtualModChanges_impl;
 tXkbUpdateActionVirtualMods XkbUpdateActionVirtualMods_impl;
 tXkbUpdateKeyTypeVirtualMods XkbUpdateKeyTypeVirtualMods_impl;
 
+// Xutil.h
+tXDestroyImage XDestroyImage_impl;
+tXGetPixel XGetPixel_impl;
+tXPutPixel XPutPixel_impl;
+tXSubImage XSubImage_impl;
+tXAddPixel XAddPixel_impl;
+tXAllocClassHint XAllocClassHint_impl;
+tXAllocIconSize XAllocIconSize_impl;
+tXAllocSizeHints XAllocSizeHints_impl;
+tXAllocStandardColormap XAllocStandardColormap_impl;
+tXAllocWMHints XAllocWMHints_impl;
+tXClipBox XClipBox_impl;
+tXCreateRegion XCreateRegion_impl;
+tXDefaultString XDefaultString_impl;
+tXDeleteContext XDeleteContext_impl;
+tXDestroyRegion XDestroyRegion_impl;
+tXEmptyRegion XEmptyRegion_impl;
+tXEqualRegion XEqualRegion_impl;
+tXFindContext XFindContext_impl;
+tXGetClassHint XGetClassHint_impl;
+tXGetIconSizes XGetIconSizes_impl;
+tXGetNormalHints XGetNormalHints_impl;
+tXGetRGBColormaps XGetRGBColormaps_impl;
+tXGetSizeHints XGetSizeHints_impl;
+tXGetStandardColormap XGetStandardColormap_impl;
+tXGetTextProperty XGetTextProperty_impl;
+tXGetVisualInfo XGetVisualInfo_impl;
+tXGetWMClientMachine XGetWMClientMachine_impl;
+tXGetWMHints XGetWMHints_impl;
+tXGetWMIconName XGetWMIconName_impl;
+tXGetWMName XGetWMName_impl;
+tXGetWMNormalHints XGetWMNormalHints_impl;
+tXGetWMSizeHints XGetWMSizeHints_impl;
+tXGetZoomHints XGetZoomHints_impl;
+tXIntersectRegion XIntersectRegion_impl;
+tXConvertCase XConvertCase_impl;
+tXLookupString XLookupString_impl;
+tXMatchVisualInfo XMatchVisualInfo_impl;
+tXOffsetRegion XOffsetRegion_impl;
+tXPointInRegion XPointInRegion_impl;
+tXPolygonRegion XPolygonRegion_impl;
+tXRectInRegion XRectInRegion_impl;
+tXSaveContext XSaveContext_impl;
+tXSetClassHint XSetClassHint_impl;
+tXSetIconSizes XSetIconSizes_impl;
+tXSetNormalHints XSetNormalHints_impl;
+tXSetRGBColormaps XSetRGBColormaps_impl;
+tXSetSizeHints XSetSizeHints_impl;
+tXSetStandardProperties XSetStandardProperties_impl;
+tXSetTextProperty XSetTextProperty_impl;
+tXSetWMClientMachine XSetWMClientMachine_impl;
+tXSetWMHints XSetWMHints_impl;
+tXSetWMIconName XSetWMIconName_impl;
+tXSetWMName XSetWMName_impl;
+tXSetWMNormalHints XSetWMNormalHints_impl;
+tXSetWMProperties XSetWMProperties_impl;
+tXmbSetWMProperties XmbSetWMProperties_impl;
+tXutf8SetWMProperties Xutf8SetWMProperties_impl;
+tXSetWMSizeHints XSetWMSizeHints_impl;
+tXSetRegion XSetRegion_impl;
+tXSetStandardColormap XSetStandardColormap_impl;
+tXSetZoomHints XSetZoomHints_impl;
+tXShrinkRegion XShrinkRegion_impl;
+tXStringListToTextProperty XStringListToTextProperty_impl;
+tXSubtractRegion XSubtractRegion_impl;
+tXmbTextListToTextProperty XmbTextListToTextProperty_impl;
+tXwcTextListToTextProperty XwcTextListToTextProperty_impl;
+tXutf8TextListToTextProperty Xutf8TextListToTextProperty_impl;
+tXwcFreeStringList XwcFreeStringList_impl;
+tXTextPropertyToStringList XTextPropertyToStringList_impl;
+tXmbTextPropertyToTextList XmbTextPropertyToTextList_impl;
+tXwcTextPropertyToTextList XwcTextPropertyToTextList_impl;
+tXutf8TextPropertyToTextList Xutf8TextPropertyToTextList_impl;
+tXUnionRectWithRegion XUnionRectWithRegion_impl;
+tXUnionRegion XUnionRegion_impl;
+tXWMGeometry XWMGeometry_impl;
+tXXorRegion XXorRegion_impl;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Function wrappers.
@@ -3907,6 +3985,404 @@ void XkbUpdateKeyTypeVirtualMods(XkbDescPtr xkb, XkbKeyTypePtr type, unsigned in
   return XkbUpdateKeyTypeVirtualMods_impl(xkb, type, changed, changes);
 }
 
+// Xutil.h
+#ifdef XUTIL_DEFINE_FUNCTIONS
+int XDestroyImage(XImage* ximage) {
+  return XDestroyImage_impl(ximage);
+}
+#endif
+
+#ifdef XUTIL_DEFINE_FUNCTIONS
+unsigned long XGetPixel(XImage* ximage, int x, int y) {
+  return XGetPixel_impl(ximage, x, y);
+}
+#endif
+
+#ifdef XUTIL_DEFINE_FUNCTIONS
+int XPutPixel(XImage* ximage, int x, int y, unsigned long pixel) {
+  return XPutPixel_impl(ximage, x, y, pixel);
+}
+#endif
+
+#ifdef XUTIL_DEFINE_FUNCTIONS
+XImage* XSubImage(XImage* ximage, int x, int y, unsigned int width, unsigned int height) {
+  return XSubImage_impl(ximage, x, y, width, height);
+}
+#endif
+
+#ifdef XUTIL_DEFINE_FUNCTIONS
+int XAddPixel(XImage* ximage, long value) {
+  return XAddPixel_impl(ximage, value);
+}
+#endif
+
+XClassHint* XAllocClassHint(void) {
+  return XAllocClassHint_impl();
+}
+
+XIconSize* XAllocIconSize(void) {
+  return XAllocIconSize_impl();
+}
+
+XSizeHints* XAllocSizeHints(void) {
+  return XAllocSizeHints_impl();
+}
+
+XStandardColormap* XAllocStandardColormap(void) {
+  return XAllocStandardColormap_impl();
+}
+
+XWMHints* XAllocWMHints(void) {
+  return XAllocWMHints_impl();
+}
+
+int XClipBox(Region r, XRectangle* rect_return) {
+  return XClipBox_impl(r, rect_return);
+}
+
+Region XCreateRegion(void) {
+  return XCreateRegion_impl();
+}
+
+const char* XDefaultString(void) {
+  return XDefaultString_impl();
+}
+
+int XDeleteContext(Display* display, XID rid, XContext context) {
+  return XDeleteContext_impl(display, rid, context);
+}
+
+int XDestroyRegion(Region r) {
+  return XDestroyRegion_impl(r);
+}
+
+int XEmptyRegion(Region r) {
+  return XEmptyRegion_impl(r);
+}
+
+int XEqualRegion(Region r1, Region r2) {
+  return XEqualRegion_impl(r1, r2);
+}
+
+int XFindContext(Display* display, XID rid, XContext context, XPointer* data_return) {
+  return XFindContext_impl(display, rid, context, data_return);
+}
+
+Status XGetClassHint(Display* display, Window w, XClassHint* class_hints_return) {
+  return XGetClassHint_impl(display, w, class_hints_return);
+}
+
+Status XGetIconSizes(Display* display, Window w, XIconSize** size_list_return, int* count_return) {
+  return XGetIconSizes_impl(display, w, size_list_return, count_return);
+}
+
+Status XGetNormalHints(Display* display, Window w, XSizeHints* hints_return) {
+  return XGetNormalHints_impl(display, w, hints_return);
+}
+
+Status XGetRGBColormaps(
+    Display* display,
+    Window w,
+    XStandardColormap** stdcmap_return,
+    int* count_return,
+    Atom property) {
+  return XGetRGBColormaps_impl(display, w, stdcmap_return, count_return, property);
+}
+
+Status XGetSizeHints(Display* display, Window w, XSizeHints* hints_return, Atom property) {
+  return XGetSizeHints_impl(display, w, hints_return, property);
+}
+
+Status XGetStandardColormap(Display* display, Window w, XStandardColormap* colormap_return, Atom property) {
+  return XGetStandardColormap_impl(display, w, colormap_return, property);
+}
+
+Status XGetTextProperty(Display* display, Window window, XTextProperty* text_prop_return, Atom property) {
+  return XGetTextProperty_impl(display, window, text_prop_return, property);
+}
+
+XVisualInfo* XGetVisualInfo(Display* display, long vinfo_mask, XVisualInfo* vinfo_template, int* nitems_return) {
+  return XGetVisualInfo_impl(display, vinfo_mask, vinfo_template, nitems_return);
+}
+
+Status XGetWMClientMachine(Display* display, Window w, XTextProperty* text_prop_return) {
+  return XGetWMClientMachine_impl(display, w, text_prop_return);
+}
+
+XWMHints* XGetWMHints(Display* display, Window w) {
+  return XGetWMHints_impl(display, w);
+}
+
+Status XGetWMIconName(Display* display, Window w, XTextProperty* text_prop_return) {
+  return XGetWMIconName_impl(display, w, text_prop_return);
+}
+
+Status XGetWMName(Display* display, Window w, XTextProperty* text_prop_return) {
+  return XGetWMName_impl(display, w, text_prop_return);
+}
+
+Status XGetWMNormalHints(Display* display, Window w, XSizeHints* hints_return, long* supplied_return) {
+  return XGetWMNormalHints_impl(display, w, hints_return, supplied_return);
+}
+
+Status XGetWMSizeHints(Display* display, Window w, XSizeHints* hints_return, long* supplied_return, Atom property) {
+  return XGetWMSizeHints_impl(display, w, hints_return, supplied_return, property);
+}
+
+Status XGetZoomHints(Display* display, Window w, XSizeHints* zhints_return) {
+  return XGetZoomHints_impl(display, w, zhints_return);
+}
+
+int XIntersectRegion(Region sra, Region srb, Region dr_return) {
+  return XIntersectRegion_impl(sra, srb, dr_return);
+}
+
+void XConvertCase(KeySym sym, KeySym* lower, KeySym* upper) {
+  return XConvertCase_impl(sym, lower, upper);
+}
+
+int XLookupString(
+    XKeyEvent* event_struct,
+    char* buffer_return,
+    int bytes_buffer,
+    KeySym* keysym_return,
+    XComposeStatus* status_in_out) {
+  return XLookupString_impl(event_struct, buffer_return, bytes_buffer, keysym_return, status_in_out);
+}
+
+Status XMatchVisualInfo(Display* display, int screen, int depth, int class_, XVisualInfo* vinfo_return) {
+  return XMatchVisualInfo_impl(display, screen, depth, class_, vinfo_return);
+}
+
+int XOffsetRegion(Region r, int dx, int dy) {
+  return XOffsetRegion_impl(r, dx, dy);
+}
+
+Bool XPointInRegion(Region r, int x, int y) {
+  return XPointInRegion_impl(r, x, y);
+}
+
+Region XPolygonRegion(XPoint* points, int n, int fill_rule) {
+  return XPolygonRegion_impl(points, n, fill_rule);
+}
+
+int XRectInRegion(Region r, int x, int y, unsigned int width, unsigned int height) {
+  return XRectInRegion_impl(r, x, y, width, height);
+}
+
+int XSaveContext(Display* display, XID rid, XContext context, _Xconst char* data) {
+  return XSaveContext_impl(display, rid, context, data);
+}
+
+int XSetClassHint(Display* display, Window w, XClassHint* class_hints) {
+  return XSetClassHint_impl(display, w, class_hints);
+}
+
+int XSetIconSizes(Display* display, Window w, XIconSize* size_list, int count) {
+  return XSetIconSizes_impl(display, w, size_list, count);
+}
+
+int XSetNormalHints(Display* display, Window w, XSizeHints* hints) {
+  return XSetNormalHints_impl(display, w, hints);
+}
+
+void XSetRGBColormaps(Display* display, Window w, XStandardColormap* stdcmaps, int count, Atom property) {
+  return XSetRGBColormaps_impl(display, w, stdcmaps, count, property);
+}
+
+int XSetSizeHints(Display* display, Window w, XSizeHints* hints, Atom property) {
+  return XSetSizeHints_impl(display, w, hints, property);
+}
+
+int XSetStandardProperties(
+    Display* display,
+    Window w,
+    _Xconst char* window_name,
+    _Xconst char* icon_name,
+    Pixmap icon_pixmap,
+    char** argv,
+    int argc,
+    XSizeHints* hints) {
+  return XSetStandardProperties_impl(display, w, window_name, icon_name, icon_pixmap, argv, argc, hints);
+}
+
+void XSetTextProperty(Display* display, Window w, XTextProperty* text_prop, Atom property) {
+  return XSetTextProperty_impl(display, w, text_prop, property);
+}
+
+void XSetWMClientMachine(Display* display, Window w, XTextProperty* text_prop) {
+  return XSetWMClientMachine_impl(display, w, text_prop);
+}
+
+int XSetWMHints(Display* display, Window w, XWMHints* wm_hints) {
+  return XSetWMHints_impl(display, w, wm_hints);
+}
+
+void XSetWMIconName(Display* display, Window w, XTextProperty* text_prop) {
+  return XSetWMIconName_impl(display, w, text_prop);
+}
+
+void XSetWMName(Display* display, Window w, XTextProperty* text_prop) {
+  return XSetWMName_impl(display, w, text_prop);
+}
+
+void XSetWMNormalHints(Display* display, Window w, XSizeHints* hints) {
+  return XSetWMNormalHints_impl(display, w, hints);
+}
+
+void XSetWMProperties(
+    Display* display,
+    Window w,
+    XTextProperty* window_name,
+    XTextProperty* icon_name,
+    char** argv,
+    int argc,
+    XSizeHints* normal_hints,
+    XWMHints* wm_hints,
+    XClassHint* class_hints) {
+  return XSetWMProperties_impl(display, w, window_name, icon_name, argv, argc, normal_hints, wm_hints, class_hints);
+}
+
+void XmbSetWMProperties(
+    Display* display,
+    Window w,
+    _Xconst char* window_name,
+    _Xconst char* icon_name,
+    char** argv,
+    int argc,
+    XSizeHints* normal_hints,
+    XWMHints* wm_hints,
+    XClassHint* class_hints) {
+  return XmbSetWMProperties_impl(display, w, window_name, icon_name, argv, argc, normal_hints, wm_hints, class_hints);
+}
+
+void Xutf8SetWMProperties(
+    Display* display,
+    Window w,
+    _Xconst char* window_name,
+    _Xconst char* icon_name,
+    char** argv,
+    int argc,
+    XSizeHints* normal_hints,
+    XWMHints* wm_hints,
+    XClassHint* class_hints) {
+  return Xutf8SetWMProperties_impl(display, w, window_name, icon_name, argv, argc, normal_hints, wm_hints, class_hints);
+}
+
+void XSetWMSizeHints(Display* display, Window w, XSizeHints* hints, Atom property) {
+  return XSetWMSizeHints_impl(display, w, hints, property);
+}
+
+int XSetRegion(Display* display, GC gc, Region r) {
+  return XSetRegion_impl(display, gc, r);
+}
+
+void XSetStandardColormap(Display* display, Window w, XStandardColormap* colormap, Atom property) {
+  return XSetStandardColormap_impl(display, w, colormap, property);
+}
+
+int XSetZoomHints(Display* display, Window w, XSizeHints* zhints) {
+  return XSetZoomHints_impl(display, w, zhints);
+}
+
+int XShrinkRegion(Region r, int dx, int dy) {
+  return XShrinkRegion_impl(r, dx, dy);
+}
+
+Status XStringListToTextProperty(char** list, int count, XTextProperty* text_prop_return) {
+  return XStringListToTextProperty_impl(list, count, text_prop_return);
+}
+
+int XSubtractRegion(Region sra, Region srb, Region dr_return) {
+  return XSubtractRegion_impl(sra, srb, dr_return);
+}
+
+int XmbTextListToTextProperty(
+    Display* display,
+    char** list,
+    int count,
+    XICCEncodingStyle style,
+    XTextProperty* text_prop_return) {
+  return XmbTextListToTextProperty_impl(display, list, count, style, text_prop_return);
+}
+
+int XwcTextListToTextProperty(
+    Display* display,
+    wchar_t** list,
+    int count,
+    XICCEncodingStyle style,
+    XTextProperty* text_prop_return) {
+  return XwcTextListToTextProperty_impl(display, list, count, style, text_prop_return);
+}
+
+int Xutf8TextListToTextProperty(
+    Display* display,
+    char** list,
+    int count,
+    XICCEncodingStyle style,
+    XTextProperty* text_prop_return) {
+  return Xutf8TextListToTextProperty_impl(display, list, count, style, text_prop_return);
+}
+
+void XwcFreeStringList(wchar_t** list) {
+  return XwcFreeStringList_impl(list);
+}
+
+Status XTextPropertyToStringList(XTextProperty* text_prop, char*** list_return, int* count_return) {
+  return XTextPropertyToStringList_impl(text_prop, list_return, count_return);
+}
+
+int XmbTextPropertyToTextList(
+    Display* display,
+    const XTextProperty* text_prop,
+    char*** list_return,
+    int* count_return) {
+  return XmbTextPropertyToTextList_impl(display, text_prop, list_return, count_return);
+}
+
+int XwcTextPropertyToTextList(
+    Display* display,
+    const XTextProperty* text_prop,
+    wchar_t*** list_return,
+    int* count_return) {
+  return XwcTextPropertyToTextList_impl(display, text_prop, list_return, count_return);
+}
+
+int Xutf8TextPropertyToTextList(
+    Display* display,
+    const XTextProperty* text_prop,
+    char*** list_return,
+    int* count_return) {
+  return Xutf8TextPropertyToTextList_impl(display, text_prop, list_return, count_return);
+}
+
+int XUnionRectWithRegion(XRectangle* rectangle, Region src_region, Region dest_region_return) {
+  return XUnionRectWithRegion_impl(rectangle, src_region, dest_region_return);
+}
+
+int XUnionRegion(Region sra, Region srb, Region dr_return) {
+  return XUnionRegion_impl(sra, srb, dr_return);
+}
+
+int XWMGeometry(
+    Display* display,
+    int screen_number,
+    _Xconst char* user_geometry,
+    _Xconst char* default_geometry,
+    unsigned int border_width,
+    XSizeHints* hints,
+    int* x_return,
+    int* y_return,
+    int* width_return,
+    int* height_return,
+    int* gravity_return) {
+  return XWMGeometry_impl(display, screen_number, user_geometry, default_geometry, border_width, hints, x_return, y_return, width_return, height_return, gravity_return);
+}
+
+int XXorRegion(Region sra, Region srb, Region dr_return) {
+  return XXorRegion_impl(sra, srb, dr_return);
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4562,6 +5038,83 @@ static void fetchPointersFromLibrary(void) {
   _LIBRARY_FIND_IMPL(x11_lib, XkbApplyVirtualModChanges);
   _LIBRARY_FIND_IMPL(x11_lib, XkbUpdateActionVirtualMods);
   _LIBRARY_FIND_IMPL(x11_lib, XkbUpdateKeyTypeVirtualMods);
+  // Xutil.h
+  _LIBRARY_FIND_IMPL(x11_lib, XDestroyImage);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetPixel);
+  _LIBRARY_FIND_IMPL(x11_lib, XPutPixel);
+  _LIBRARY_FIND_IMPL(x11_lib, XSubImage);
+  _LIBRARY_FIND_IMPL(x11_lib, XAddPixel);
+  _LIBRARY_FIND_IMPL(x11_lib, XAllocClassHint);
+  _LIBRARY_FIND_IMPL(x11_lib, XAllocIconSize);
+  _LIBRARY_FIND_IMPL(x11_lib, XAllocSizeHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XAllocStandardColormap);
+  _LIBRARY_FIND_IMPL(x11_lib, XAllocWMHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XClipBox);
+  _LIBRARY_FIND_IMPL(x11_lib, XCreateRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XDefaultString);
+  _LIBRARY_FIND_IMPL(x11_lib, XDeleteContext);
+  _LIBRARY_FIND_IMPL(x11_lib, XDestroyRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XEmptyRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XEqualRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XFindContext);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetClassHint);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetIconSizes);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetNormalHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetRGBColormaps);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetSizeHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetStandardColormap);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetTextProperty);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetVisualInfo);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetWMClientMachine);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetWMHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetWMIconName);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetWMName);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetWMNormalHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetWMSizeHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XGetZoomHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XIntersectRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XConvertCase);
+  _LIBRARY_FIND_IMPL(x11_lib, XLookupString);
+  _LIBRARY_FIND_IMPL(x11_lib, XMatchVisualInfo);
+  _LIBRARY_FIND_IMPL(x11_lib, XOffsetRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XPointInRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XPolygonRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XRectInRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XSaveContext);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetClassHint);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetIconSizes);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetNormalHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetRGBColormaps);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetSizeHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetStandardProperties);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetTextProperty);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMClientMachine);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMIconName);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMName);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMNormalHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMProperties);
+  _LIBRARY_FIND_IMPL(x11_lib, XmbSetWMProperties);
+  _LIBRARY_FIND_IMPL(x11_lib, Xutf8SetWMProperties);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetWMSizeHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetStandardColormap);
+  _LIBRARY_FIND_IMPL(x11_lib, XSetZoomHints);
+  _LIBRARY_FIND_IMPL(x11_lib, XShrinkRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XStringListToTextProperty);
+  _LIBRARY_FIND_IMPL(x11_lib, XSubtractRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XmbTextListToTextProperty);
+  _LIBRARY_FIND_IMPL(x11_lib, XwcTextListToTextProperty);
+  _LIBRARY_FIND_IMPL(x11_lib, Xutf8TextListToTextProperty);
+  _LIBRARY_FIND_IMPL(x11_lib, XwcFreeStringList);
+  _LIBRARY_FIND_IMPL(x11_lib, XTextPropertyToStringList);
+  _LIBRARY_FIND_IMPL(x11_lib, XmbTextPropertyToTextList);
+  _LIBRARY_FIND_IMPL(x11_lib, XwcTextPropertyToTextList);
+  _LIBRARY_FIND_IMPL(x11_lib, Xutf8TextPropertyToTextList);
+  _LIBRARY_FIND_IMPL(x11_lib, XUnionRectWithRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XUnionRegion);
+  _LIBRARY_FIND_IMPL(x11_lib, XWMGeometry);
+  _LIBRARY_FIND_IMPL(x11_lib, XXorRegion);
 }
 
 XewErrorCode xewX11Init(void) {

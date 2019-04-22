@@ -30,6 +30,7 @@
 #include <X11/XKBlib.h>
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
+#include <X11/Xutil.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -2134,6 +2135,273 @@ typedef void (*tXkbUpdateKeyTypeVirtualMods)(
     unsigned int changed,
     XkbChangesPtr changes);
 
+typedef int (*tXDestroyImage)(XImage* ximage);
+typedef unsigned long (*tXGetPixel)(XImage* ximage, int x, int y);
+typedef int (*tXPutPixel)(XImage* ximage, int x, int y, unsigned long pixel);
+typedef XImage* (*tXSubImage)(
+    XImage* ximage,
+    int x,
+    int y,
+    unsigned int width,
+    unsigned int height);
+typedef int (*tXAddPixel)(XImage* ximage, long value);
+typedef XClassHint* (*tXAllocClassHint)(void);
+typedef XIconSize* (*tXAllocIconSize)(void);
+typedef XSizeHints* (*tXAllocSizeHints)(void);
+typedef XStandardColormap* (*tXAllocStandardColormap)(void);
+typedef XWMHints* (*tXAllocWMHints)(void);
+typedef int (*tXClipBox)(Region r, XRectangle* rect_return);
+typedef Region (*tXCreateRegion)(void);
+typedef const char* (*tXDefaultString)(void);
+typedef int (*tXDeleteContext)(Display* display, XID rid, XContext context);
+typedef int (*tXDestroyRegion)(Region r);
+typedef int (*tXEmptyRegion)(Region r);
+typedef int (*tXEqualRegion)(Region r1, Region r2);
+typedef int (*tXFindContext)(
+    Display* display,
+    XID rid,
+    XContext context,
+    XPointer* data_return);
+typedef Status (*tXGetClassHint)(
+    Display* display,
+    Window w,
+    XClassHint* class_hints_return);
+typedef Status (*tXGetIconSizes)(
+    Display* display,
+    Window w,
+    XIconSize** size_list_return,
+    int* count_return);
+typedef Status (*tXGetNormalHints)(
+    Display* display,
+    Window w,
+    XSizeHints* hints_return);
+typedef Status (*tXGetRGBColormaps)(
+    Display* display,
+    Window w,
+    XStandardColormap** stdcmap_return,
+    int* count_return,
+    Atom property);
+typedef Status (*tXGetSizeHints)(
+    Display* display,
+    Window w,
+    XSizeHints* hints_return,
+    Atom property);
+typedef Status (*tXGetStandardColormap)(
+    Display* display,
+    Window w,
+    XStandardColormap* colormap_return,
+    Atom property);
+typedef Status (*tXGetTextProperty)(
+    Display* display,
+    Window window,
+    XTextProperty* text_prop_return,
+    Atom property);
+typedef XVisualInfo* (*tXGetVisualInfo)(
+    Display* display,
+    long vinfo_mask,
+    XVisualInfo* vinfo_template,
+    int* nitems_return);
+typedef Status (*tXGetWMClientMachine)(
+    Display* display,
+    Window w,
+    XTextProperty* text_prop_return);
+typedef XWMHints* (*tXGetWMHints)(Display* display, Window w);
+typedef Status (*tXGetWMIconName)(
+    Display* display,
+    Window w,
+    XTextProperty* text_prop_return);
+typedef Status (*tXGetWMName)(
+    Display* display,
+    Window w,
+    XTextProperty* text_prop_return);
+typedef Status (*tXGetWMNormalHints)(
+    Display* display,
+    Window w,
+    XSizeHints* hints_return,
+    long* supplied_return);
+typedef Status (*tXGetWMSizeHints)(
+    Display* display,
+    Window w,
+    XSizeHints* hints_return,
+    long* supplied_return,
+    Atom property);
+typedef Status (*tXGetZoomHints)(
+    Display* display,
+    Window w,
+    XSizeHints* zhints_return);
+typedef int (*tXIntersectRegion)(Region sra, Region srb, Region dr_return);
+typedef void (*tXConvertCase)(KeySym sym, KeySym* lower, KeySym* upper);
+typedef int (*tXLookupString)(
+    XKeyEvent* event_struct,
+    char* buffer_return,
+    int bytes_buffer,
+    KeySym* keysym_return,
+    XComposeStatus* status_in_out);
+typedef Status (*tXMatchVisualInfo)(
+    Display* display,
+    int screen,
+    int depth,
+    int class_,
+    XVisualInfo* vinfo_return);
+typedef int (*tXOffsetRegion)(Region r, int dx, int dy);
+typedef Bool (*tXPointInRegion)(Region r, int x, int y);
+typedef Region (*tXPolygonRegion)(XPoint* points, int n, int fill_rule);
+typedef int (*tXRectInRegion)(
+    Region r,
+    int x,
+    int y,
+    unsigned int width,
+    unsigned int height);
+typedef int (*tXSaveContext)(
+    Display* display,
+    XID rid,
+    XContext context,
+    _Xconst char* data);
+typedef int (*tXSetClassHint)(Display* display, Window w, XClassHint* class_hints);
+typedef int (*tXSetIconSizes)(
+    Display* display,
+    Window w,
+    XIconSize* size_list,
+    int count);
+typedef int (*tXSetNormalHints)(Display* display, Window w, XSizeHints* hints);
+typedef void (*tXSetRGBColormaps)(
+    Display* display,
+    Window w,
+    XStandardColormap* stdcmaps,
+    int count,
+    Atom property);
+typedef int (*tXSetSizeHints)(
+    Display* display,
+    Window w,
+    XSizeHints* hints,
+    Atom property);
+typedef int (*tXSetStandardProperties)(
+    Display* display,
+    Window w,
+    _Xconst char* window_name,
+    _Xconst char* icon_name,
+    Pixmap icon_pixmap,
+    char** argv,
+    int argc,
+    XSizeHints* hints);
+typedef void (*tXSetTextProperty)(
+    Display* display,
+    Window w,
+    XTextProperty* text_prop,
+    Atom property);
+typedef void (*tXSetWMClientMachine)(
+    Display* display,
+    Window w,
+    XTextProperty* text_prop);
+typedef int (*tXSetWMHints)(Display* display, Window w, XWMHints* wm_hints);
+typedef void (*tXSetWMIconName)(Display* display, Window w, XTextProperty* text_prop);
+typedef void (*tXSetWMName)(Display* display, Window w, XTextProperty* text_prop);
+typedef void (*tXSetWMNormalHints)(Display* display, Window w, XSizeHints* hints);
+typedef void (*tXSetWMProperties)(
+    Display* display,
+    Window w,
+    XTextProperty* window_name,
+    XTextProperty* icon_name,
+    char** argv,
+    int argc,
+    XSizeHints* normal_hints,
+    XWMHints* wm_hints,
+    XClassHint* class_hints);
+typedef void (*tXmbSetWMProperties)(
+    Display* display,
+    Window w,
+    _Xconst char* window_name,
+    _Xconst char* icon_name,
+    char** argv,
+    int argc,
+    XSizeHints* normal_hints,
+    XWMHints* wm_hints,
+    XClassHint* class_hints);
+typedef void (*tXutf8SetWMProperties)(
+    Display* display,
+    Window w,
+    _Xconst char* window_name,
+    _Xconst char* icon_name,
+    char** argv,
+    int argc,
+    XSizeHints* normal_hints,
+    XWMHints* wm_hints,
+    XClassHint* class_hints);
+typedef void (*tXSetWMSizeHints)(
+    Display* display,
+    Window w,
+    XSizeHints* hints,
+    Atom property);
+typedef int (*tXSetRegion)(Display* display, GC gc, Region r);
+typedef void (*tXSetStandardColormap)(
+    Display* display,
+    Window w,
+    XStandardColormap* colormap,
+    Atom property);
+typedef int (*tXSetZoomHints)(Display* display, Window w, XSizeHints* zhints);
+typedef int (*tXShrinkRegion)(Region r, int dx, int dy);
+typedef Status (*tXStringListToTextProperty)(
+    char** list,
+    int count,
+    XTextProperty* text_prop_return);
+typedef int (*tXSubtractRegion)(Region sra, Region srb, Region dr_return);
+typedef int (*tXmbTextListToTextProperty)(
+    Display* display,
+    char** list,
+    int count,
+    XICCEncodingStyle style,
+    XTextProperty* text_prop_return);
+typedef int (*tXwcTextListToTextProperty)(
+    Display* display,
+    wchar_t** list,
+    int count,
+    XICCEncodingStyle style,
+    XTextProperty* text_prop_return);
+typedef int (*tXutf8TextListToTextProperty)(
+    Display* display,
+    char** list,
+    int count,
+    XICCEncodingStyle style,
+    XTextProperty* text_prop_return);
+typedef void (*tXwcFreeStringList)(wchar_t** list);
+typedef Status (*tXTextPropertyToStringList)(
+    XTextProperty* text_prop,
+    char*** list_return,
+    int* count_return);
+typedef int (*tXmbTextPropertyToTextList)(
+    Display* display,
+    const XTextProperty* text_prop,
+    char*** list_return,
+    int* count_return);
+typedef int (*tXwcTextPropertyToTextList)(
+    Display* display,
+    const XTextProperty* text_prop,
+    wchar_t*** list_return,
+    int* count_return);
+typedef int (*tXutf8TextPropertyToTextList)(
+    Display* display,
+    const XTextProperty* text_prop,
+    char*** list_return,
+    int* count_return);
+typedef int (*tXUnionRectWithRegion)(
+    XRectangle* rectangle,
+    Region src_region,
+    Region dest_region_return);
+typedef int (*tXUnionRegion)(Region sra, Region srb, Region dr_return);
+typedef int (*tXWMGeometry)(
+    Display* display,
+    int screen_number,
+    _Xconst char* user_geometry,
+    _Xconst char* default_geometry,
+    unsigned int border_width,
+    XSizeHints* hints,
+    int* x_return,
+    int* y_return,
+    int* width_return,
+    int* height_return,
+    int* gravity_return);
+typedef int (*tXXorRegion)(Region sra, Region srb, Region dr_return);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Functors declarations.
 
@@ -2760,6 +3028,84 @@ extern tXkbSetDebuggingFlags XkbSetDebuggingFlags_impl;
 extern tXkbApplyVirtualModChanges XkbApplyVirtualModChanges_impl;
 extern tXkbUpdateActionVirtualMods XkbUpdateActionVirtualMods_impl;
 extern tXkbUpdateKeyTypeVirtualMods XkbUpdateKeyTypeVirtualMods_impl;
+
+// Xutil.h
+extern tXDestroyImage XDestroyImage_impl;
+extern tXGetPixel XGetPixel_impl;
+extern tXPutPixel XPutPixel_impl;
+extern tXSubImage XSubImage_impl;
+extern tXAddPixel XAddPixel_impl;
+extern tXAllocClassHint XAllocClassHint_impl;
+extern tXAllocIconSize XAllocIconSize_impl;
+extern tXAllocSizeHints XAllocSizeHints_impl;
+extern tXAllocStandardColormap XAllocStandardColormap_impl;
+extern tXAllocWMHints XAllocWMHints_impl;
+extern tXClipBox XClipBox_impl;
+extern tXCreateRegion XCreateRegion_impl;
+extern tXDefaultString XDefaultString_impl;
+extern tXDeleteContext XDeleteContext_impl;
+extern tXDestroyRegion XDestroyRegion_impl;
+extern tXEmptyRegion XEmptyRegion_impl;
+extern tXEqualRegion XEqualRegion_impl;
+extern tXFindContext XFindContext_impl;
+extern tXGetClassHint XGetClassHint_impl;
+extern tXGetIconSizes XGetIconSizes_impl;
+extern tXGetNormalHints XGetNormalHints_impl;
+extern tXGetRGBColormaps XGetRGBColormaps_impl;
+extern tXGetSizeHints XGetSizeHints_impl;
+extern tXGetStandardColormap XGetStandardColormap_impl;
+extern tXGetTextProperty XGetTextProperty_impl;
+extern tXGetVisualInfo XGetVisualInfo_impl;
+extern tXGetWMClientMachine XGetWMClientMachine_impl;
+extern tXGetWMHints XGetWMHints_impl;
+extern tXGetWMIconName XGetWMIconName_impl;
+extern tXGetWMName XGetWMName_impl;
+extern tXGetWMNormalHints XGetWMNormalHints_impl;
+extern tXGetWMSizeHints XGetWMSizeHints_impl;
+extern tXGetZoomHints XGetZoomHints_impl;
+extern tXIntersectRegion XIntersectRegion_impl;
+extern tXConvertCase XConvertCase_impl;
+extern tXLookupString XLookupString_impl;
+extern tXMatchVisualInfo XMatchVisualInfo_impl;
+extern tXOffsetRegion XOffsetRegion_impl;
+extern tXPointInRegion XPointInRegion_impl;
+extern tXPolygonRegion XPolygonRegion_impl;
+extern tXRectInRegion XRectInRegion_impl;
+extern tXSaveContext XSaveContext_impl;
+extern tXSetClassHint XSetClassHint_impl;
+extern tXSetIconSizes XSetIconSizes_impl;
+extern tXSetNormalHints XSetNormalHints_impl;
+extern tXSetRGBColormaps XSetRGBColormaps_impl;
+extern tXSetSizeHints XSetSizeHints_impl;
+extern tXSetStandardProperties XSetStandardProperties_impl;
+extern tXSetTextProperty XSetTextProperty_impl;
+extern tXSetWMClientMachine XSetWMClientMachine_impl;
+extern tXSetWMHints XSetWMHints_impl;
+extern tXSetWMIconName XSetWMIconName_impl;
+extern tXSetWMName XSetWMName_impl;
+extern tXSetWMNormalHints XSetWMNormalHints_impl;
+extern tXSetWMProperties XSetWMProperties_impl;
+extern tXmbSetWMProperties XmbSetWMProperties_impl;
+extern tXutf8SetWMProperties Xutf8SetWMProperties_impl;
+extern tXSetWMSizeHints XSetWMSizeHints_impl;
+extern tXSetRegion XSetRegion_impl;
+extern tXSetStandardColormap XSetStandardColormap_impl;
+extern tXSetZoomHints XSetZoomHints_impl;
+extern tXShrinkRegion XShrinkRegion_impl;
+extern tXStringListToTextProperty XStringListToTextProperty_impl;
+extern tXSubtractRegion XSubtractRegion_impl;
+extern tXmbTextListToTextProperty XmbTextListToTextProperty_impl;
+extern tXwcTextListToTextProperty XwcTextListToTextProperty_impl;
+extern tXutf8TextListToTextProperty Xutf8TextListToTextProperty_impl;
+extern tXwcFreeStringList XwcFreeStringList_impl;
+extern tXTextPropertyToStringList XTextPropertyToStringList_impl;
+extern tXmbTextPropertyToTextList XmbTextPropertyToTextList_impl;
+extern tXwcTextPropertyToTextList XwcTextPropertyToTextList_impl;
+extern tXutf8TextPropertyToTextList Xutf8TextPropertyToTextList_impl;
+extern tXUnionRectWithRegion XUnionRectWithRegion_impl;
+extern tXUnionRegion XUnionRegion_impl;
+extern tXWMGeometry XWMGeometry_impl;
+extern tXXorRegion XXorRegion_impl;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Wrangler.

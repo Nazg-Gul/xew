@@ -91,7 +91,7 @@ MODULES = (
      "x11": {
        "paths": {"linux": ("libX11.so.6", "libX11.so")},
        "required": True,
-       "headers": ("XKBlib.h", "Xlib.h", "Xlibint.h"),
+       "headers": ("XKBlib.h", "Xlib.h", "Xlibint.h", "Xutil.h"),
      },
      "x11_xcb": {
        "paths": {"linux": ("libX11-xcb.so.6", "libX11-xcb.so")},
@@ -103,12 +103,14 @@ MODULES = (
    "headers": ("Xlib.h",
                "Xlib-xcb.h",
                "Xlibint.h",
-               "XKBlib.h"),
+               "XKBlib.h",
+               "Xutil.h"),
    "extra_wrangler_includes": ("X11/keysym.h",
                                "X11/Xatom.h",
                                "X11/XKBlib.h",
                                "X11/Xlib.h",
-                               "X11/Xlibint.h"),
+                               "X11/Xlibint.h",
+                               "X11/Xutil.h"),
    "extra_wrangler_code": """
 // min/max conflicts with STL includes.
 \n#undef min\n#undef max
@@ -522,6 +524,12 @@ def wrap_code_with_ifdef(function_name, code):
         return "#if defined(__UNIXOS2__)\n" + code + "#endif\n"
     elif function_name == "Data":
         return "#ifdef DataRoutineIsProcedure\n" + code + "#endif\n"
+    elif function_name in ('XDestroyImage',
+                           'XGetPixel',
+                           'XPutPixel',
+                           'XSubImage',
+                           'XAddPixel'):
+        return "#ifdef XUTIL_DEFINE_FUNCTIONS\n" + code + "#endif\n"
     return code
 
 
