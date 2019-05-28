@@ -30,9 +30,11 @@
 #ifdef _WIN32
 static const char* xcb_paths[] = {NULL};
 static const char* xcb_keysyms_paths[] = {NULL};
+static const char* xcb_xinerama_paths[] = {NULL};
 #elif defined(__APPLE__)
 static const char* xcb_paths[] = {NULL};
 static const char* xcb_keysyms_paths[] = {NULL};
+static const char* xcb_xinerama_paths[] = {NULL};
 #else
 static const char* xcb_paths[] = {"libxcb.so.1",
                                   "libxcb.so",
@@ -40,10 +42,14 @@ static const char* xcb_paths[] = {"libxcb.so.1",
 static const char* xcb_keysyms_paths[] = {"libxcb-keysyms.so.1",
                                           "libxcb-keysyms.so",
                                           NULL};
+static const char* xcb_xinerama_paths[] = {"libxcb-xinerama.so.0",
+                                           "libxcb-xinerama.so",
+                                           NULL};
 #endif
 
 static DynamicLibrary* xcb_lib = NULL;
 static DynamicLibrary* xcb_keysyms_lib = NULL;
+static DynamicLibrary* xcb_xinerama_lib = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functor definitions.
@@ -709,6 +715,32 @@ txcb_is_pf_key xcb_is_pf_key_impl;
 txcb_is_function_key xcb_is_function_key_impl;
 txcb_is_misc_function_key xcb_is_misc_function_key_impl;
 txcb_is_modifier_key xcb_is_modifier_key_impl;
+
+// xinerama.h
+txcb_xinerama_screen_info_next xcb_xinerama_screen_info_next_impl;
+txcb_xinerama_screen_info_end xcb_xinerama_screen_info_end_impl;
+txcb_xinerama_query_version xcb_xinerama_query_version_impl;
+txcb_xinerama_query_version_unchecked xcb_xinerama_query_version_unchecked_impl;
+txcb_xinerama_query_version_reply xcb_xinerama_query_version_reply_impl;
+txcb_xinerama_get_state xcb_xinerama_get_state_impl;
+txcb_xinerama_get_state_unchecked xcb_xinerama_get_state_unchecked_impl;
+txcb_xinerama_get_state_reply xcb_xinerama_get_state_reply_impl;
+txcb_xinerama_get_screen_count xcb_xinerama_get_screen_count_impl;
+txcb_xinerama_get_screen_count_unchecked xcb_xinerama_get_screen_count_unchecked_impl;
+txcb_xinerama_get_screen_count_reply xcb_xinerama_get_screen_count_reply_impl;
+txcb_xinerama_get_screen_size xcb_xinerama_get_screen_size_impl;
+txcb_xinerama_get_screen_size_unchecked xcb_xinerama_get_screen_size_unchecked_impl;
+txcb_xinerama_get_screen_size_reply xcb_xinerama_get_screen_size_reply_impl;
+txcb_xinerama_is_active xcb_xinerama_is_active_impl;
+txcb_xinerama_is_active_unchecked xcb_xinerama_is_active_unchecked_impl;
+txcb_xinerama_is_active_reply xcb_xinerama_is_active_reply_impl;
+txcb_xinerama_query_screens_sizeof xcb_xinerama_query_screens_sizeof_impl;
+txcb_xinerama_query_screens xcb_xinerama_query_screens_impl;
+txcb_xinerama_query_screens_unchecked xcb_xinerama_query_screens_unchecked_impl;
+txcb_xinerama_query_screens_screen_info xcb_xinerama_query_screens_screen_info_impl;
+txcb_xinerama_query_screens_screen_info_length xcb_xinerama_query_screens_screen_info_length_impl;
+txcb_xinerama_query_screens_screen_info_iterator xcb_xinerama_query_screens_screen_info_iterator_impl;
+txcb_xinerama_query_screens_reply xcb_xinerama_query_screens_reply_impl;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4109,6 +4141,115 @@ int xcb_is_modifier_key(xcb_keysym_t keysym) {
   return xcb_is_modifier_key_impl(keysym);
 }
 
+// xinerama.h
+void xcb_xinerama_screen_info_next(xcb_xinerama_screen_info_iterator_t* i) {
+  return xcb_xinerama_screen_info_next_impl(i);
+}
+
+xcb_generic_iterator_t xcb_xinerama_screen_info_end(xcb_xinerama_screen_info_iterator_t i) {
+  return xcb_xinerama_screen_info_end_impl(i);
+}
+
+xcb_xinerama_query_version_cookie_t xcb_xinerama_query_version(xcb_connection_t* c, uint8_t major, uint8_t minor) {
+  return xcb_xinerama_query_version_impl(c, major, minor);
+}
+
+xcb_xinerama_query_version_cookie_t xcb_xinerama_query_version_unchecked(xcb_connection_t* c, uint8_t major, uint8_t minor) {
+  return xcb_xinerama_query_version_unchecked_impl(c, major, minor);
+}
+
+xcb_xinerama_query_version_reply_t* xcb_xinerama_query_version_reply(
+    xcb_connection_t* c,
+    xcb_xinerama_query_version_cookie_t cookie,
+    xcb_generic_error_t** e) {
+  return xcb_xinerama_query_version_reply_impl(c, cookie, e);
+}
+
+xcb_xinerama_get_state_cookie_t xcb_xinerama_get_state(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_xinerama_get_state_impl(c, window);
+}
+
+xcb_xinerama_get_state_cookie_t xcb_xinerama_get_state_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_xinerama_get_state_unchecked_impl(c, window);
+}
+
+xcb_xinerama_get_state_reply_t* xcb_xinerama_get_state_reply(xcb_connection_t* c, xcb_xinerama_get_state_cookie_t cookie, xcb_generic_error_t** e) {
+  return xcb_xinerama_get_state_reply_impl(c, cookie, e);
+}
+
+xcb_xinerama_get_screen_count_cookie_t xcb_xinerama_get_screen_count(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_xinerama_get_screen_count_impl(c, window);
+}
+
+xcb_xinerama_get_screen_count_cookie_t xcb_xinerama_get_screen_count_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_xinerama_get_screen_count_unchecked_impl(c, window);
+}
+
+xcb_xinerama_get_screen_count_reply_t* xcb_xinerama_get_screen_count_reply(
+    xcb_connection_t* c,
+    xcb_xinerama_get_screen_count_cookie_t cookie,
+    xcb_generic_error_t** e) {
+  return xcb_xinerama_get_screen_count_reply_impl(c, cookie, e);
+}
+
+xcb_xinerama_get_screen_size_cookie_t xcb_xinerama_get_screen_size(xcb_connection_t* c, xcb_window_t window, uint32_t screen) {
+  return xcb_xinerama_get_screen_size_impl(c, window, screen);
+}
+
+xcb_xinerama_get_screen_size_cookie_t xcb_xinerama_get_screen_size_unchecked(xcb_connection_t* c, xcb_window_t window, uint32_t screen) {
+  return xcb_xinerama_get_screen_size_unchecked_impl(c, window, screen);
+}
+
+xcb_xinerama_get_screen_size_reply_t* xcb_xinerama_get_screen_size_reply(
+    xcb_connection_t* c,
+    xcb_xinerama_get_screen_size_cookie_t cookie,
+    xcb_generic_error_t** e) {
+  return xcb_xinerama_get_screen_size_reply_impl(c, cookie, e);
+}
+
+xcb_xinerama_is_active_cookie_t xcb_xinerama_is_active(xcb_connection_t* c) {
+  return xcb_xinerama_is_active_impl(c);
+}
+
+xcb_xinerama_is_active_cookie_t xcb_xinerama_is_active_unchecked(xcb_connection_t* c) {
+  return xcb_xinerama_is_active_unchecked_impl(c);
+}
+
+xcb_xinerama_is_active_reply_t* xcb_xinerama_is_active_reply(xcb_connection_t* c, xcb_xinerama_is_active_cookie_t cookie, xcb_generic_error_t** e) {
+  return xcb_xinerama_is_active_reply_impl(c, cookie, e);
+}
+
+int xcb_xinerama_query_screens_sizeof(const void* _buffer) {
+  return xcb_xinerama_query_screens_sizeof_impl(_buffer);
+}
+
+xcb_xinerama_query_screens_cookie_t xcb_xinerama_query_screens(xcb_connection_t* c) {
+  return xcb_xinerama_query_screens_impl(c);
+}
+
+xcb_xinerama_query_screens_cookie_t xcb_xinerama_query_screens_unchecked(xcb_connection_t* c) {
+  return xcb_xinerama_query_screens_unchecked_impl(c);
+}
+
+xcb_xinerama_screen_info_t* xcb_xinerama_query_screens_screen_info(const xcb_xinerama_query_screens_reply_t* R) {
+  return xcb_xinerama_query_screens_screen_info_impl(R);
+}
+
+int xcb_xinerama_query_screens_screen_info_length(const xcb_xinerama_query_screens_reply_t* R) {
+  return xcb_xinerama_query_screens_screen_info_length_impl(R);
+}
+
+xcb_xinerama_screen_info_iterator_t xcb_xinerama_query_screens_screen_info_iterator(const xcb_xinerama_query_screens_reply_t* R) {
+  return xcb_xinerama_query_screens_screen_info_iterator_impl(R);
+}
+
+xcb_xinerama_query_screens_reply_t* xcb_xinerama_query_screens_reply(
+    xcb_connection_t* c,
+    xcb_xinerama_query_screens_cookie_t cookie,
+    xcb_generic_error_t** e) {
+  return xcb_xinerama_query_screens_reply_impl(c, cookie, e);
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4140,6 +4281,7 @@ static XewErrorCode openLibraries() {
   if (xcb_keysyms_lib == NULL) {
     return XEW_ERROR_OPEN_FAILED;
   }
+  xcb_xinerama_lib = xew_dynamic_library_open_find(xcb_xinerama_paths);
   return XEW_SUCCESS;
 }
 
@@ -4803,6 +4945,31 @@ static void fetchPointersFromLibrary(void) {
   _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_function_key);
   _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_misc_function_key);
   _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_is_modifier_key);
+  // xinerama.h
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_screen_info_next);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_screen_info_end);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_version);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_version_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_version_reply);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_state);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_state_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_state_reply);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_screen_count);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_screen_count_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_screen_count_reply);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_screen_size);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_screen_size_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_get_screen_size_reply);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_is_active);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_is_active_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_is_active_reply);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens_sizeof);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens_screen_info);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens_screen_info_length);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens_screen_info_iterator);
+  _LIBRARY_FIND_IMPL(xcb_xinerama_lib, xcb_xinerama_query_screens_reply);
 }
 
 XewErrorCode xewXCBInit(void) {
