@@ -47,8 +47,6 @@ const char* xewErrorString(XewErrorCode error);
 #define XEW_HAS_SYMBOL_IMPL(symbol)  \
     (_XEW_GLUE(symbol, _XEW_IMPL_SUFFIX) != NULL)
 
-#define XEW_HAS_SYMBOL(symbol) ((symbol) != NULL)
-
 #ifdef __cplusplus
 }
 #endif

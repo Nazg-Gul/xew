@@ -65,6 +65,9 @@ int main(int argc, char* argv[]) {
   (void) argv;  // Ignored.
   if (xewX11Init() == XEW_SUCCESS) {
     printf("X11 found\n");
+    if (X11_HAS_SYMBOL(XineramaIsActive)) {
+      printf("Found Xinerama\n");
+    }
     openTestWindow();
   }
   else {

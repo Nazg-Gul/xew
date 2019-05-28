@@ -30,9 +30,11 @@
 #ifdef _WIN32
 static const char* x11_paths[] = {NULL};
 static const char* x11_xcb_paths[] = {NULL};
+static const char* x11_xinerama_paths[] = {NULL};
 #elif defined(__APPLE__)
 static const char* x11_paths[] = {NULL};
 static const char* x11_xcb_paths[] = {NULL};
+static const char* x11_xinerama_paths[] = {NULL};
 #else
 static const char* x11_paths[] = {"libX11.so.6",
                                   "libX11.so",
@@ -40,10 +42,14 @@ static const char* x11_paths[] = {"libX11.so.6",
 static const char* x11_xcb_paths[] = {"libX11-xcb.so.6",
                                       "libX11-xcb.so",
                                       NULL};
+static const char* x11_xinerama_paths[] = {"libXinerama.so.1",
+                                           "libXinerama.so",
+                                           NULL};
 #endif
 
 static DynamicLibrary* x11_lib = NULL;
 static DynamicLibrary* x11_xcb_lib = NULL;
+static DynamicLibrary* x11_xinerama_lib = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functor definitions.
@@ -749,6 +755,12 @@ tXUnionRectWithRegion XUnionRectWithRegion_impl;
 tXUnionRegion XUnionRegion_impl;
 tXWMGeometry XWMGeometry_impl;
 tXXorRegion XXorRegion_impl;
+
+// Xinerama.h
+tXineramaQueryExtension XineramaQueryExtension_impl;
+tXineramaQueryVersion XineramaQueryVersion_impl;
+tXineramaIsActive XineramaIsActive_impl;
+tXineramaQueryScreens XineramaQueryScreens_impl;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4386,6 +4398,23 @@ int XXorRegion(Region sra, Region srb, Region dr_return) {
   return XXorRegion_impl(sra, srb, dr_return);
 }
 
+// Xinerama.h
+Bool XineramaQueryExtension(Display* dpy, int* event_base, int* error_base) {
+  return XineramaQueryExtension_impl(dpy, event_base, error_base);
+}
+
+Status XineramaQueryVersion(Display* dpy, int* major_versionp, int* minor_versionp) {
+  return XineramaQueryVersion_impl(dpy, major_versionp, minor_versionp);
+}
+
+Bool XineramaIsActive(Display* dpy) {
+  return XineramaIsActive_impl(dpy);
+}
+
+XineramaScreenInfo* XineramaQueryScreens(Display* dpy, int* number) {
+  return XineramaQueryScreens_impl(dpy, number);
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4417,6 +4446,7 @@ static XewErrorCode openLibraries() {
   if (x11_xcb_lib == NULL) {
     return XEW_ERROR_OPEN_FAILED;
   }
+  x11_xinerama_lib = xew_dynamic_library_open_find(x11_xinerama_paths);
   return XEW_SUCCESS;
 }
 
@@ -5118,6 +5148,11 @@ static void fetchPointersFromLibrary(void) {
   _LIBRARY_FIND_IMPL(x11_lib, XUnionRegion);
   _LIBRARY_FIND_IMPL(x11_lib, XWMGeometry);
   _LIBRARY_FIND_IMPL(x11_lib, XXorRegion);
+  // Xinerama.h
+  _LIBRARY_FIND_IMPL(x11_xinerama_lib, XineramaQueryExtension);
+  _LIBRARY_FIND_IMPL(x11_xinerama_lib, XineramaQueryVersion);
+  _LIBRARY_FIND_IMPL(x11_xinerama_lib, XineramaIsActive);
+  _LIBRARY_FIND_IMPL(x11_xinerama_lib, XineramaQueryScreens);
 }
 
 XewErrorCode xewX11Init(void) {

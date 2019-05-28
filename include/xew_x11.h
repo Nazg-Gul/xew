@@ -31,6 +31,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
+#include <X11/extensions/Xinerama.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -2402,6 +2403,17 @@ typedef int (*tXWMGeometry)(
     int* gravity_return);
 typedef int (*tXXorRegion)(Region sra, Region srb, Region dr_return);
 
+typedef Bool (*tXineramaQueryExtension)(
+    Display* dpy,
+    int* event_base,
+    int* error_base);
+typedef Status (*tXineramaQueryVersion)(
+    Display* dpy,
+    int* major_versionp,
+    int* minor_versionp);
+typedef Bool (*tXineramaIsActive)(Display* dpy);
+typedef XineramaScreenInfo* (*tXineramaQueryScreens)(Display* dpy, int* number);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Functors declarations.
 
@@ -3106,6 +3118,12 @@ extern tXUnionRectWithRegion XUnionRectWithRegion_impl;
 extern tXUnionRegion XUnionRegion_impl;
 extern tXWMGeometry XWMGeometry_impl;
 extern tXXorRegion XXorRegion_impl;
+
+// Xinerama.h
+extern tXineramaQueryExtension XineramaQueryExtension_impl;
+extern tXineramaQueryVersion XineramaQueryVersion_impl;
+extern tXineramaIsActive XineramaIsActive_impl;
+extern tXineramaQueryScreens XineramaQueryScreens_impl;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Wrangler.

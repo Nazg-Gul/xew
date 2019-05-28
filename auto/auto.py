@@ -97,6 +97,11 @@ MODULES = (
        "paths": {"linux": ("libX11-xcb.so.6", "libX11-xcb.so")},
        "required": True,
        "headers": ("Xlib-xcb.h",)
+     },
+     "x11_xinerama": {
+       "paths": {"linux": ("libXinerama.so.1", "libXinerama.so")},
+       "required": False,
+       "headers": ("Xinerama.h",)
      }
    },
    "include_directory": "/usr/include/X11",
@@ -104,13 +109,15 @@ MODULES = (
                "Xlib-xcb.h",
                "Xlibint.h",
                "XKBlib.h",
-               "Xutil.h"),
+               "Xutil.h",
+               "extensions/Xinerama.h"),
    "extra_wrangler_includes": ("X11/keysym.h",
                                "X11/Xatom.h",
                                "X11/XKBlib.h",
                                "X11/Xlib.h",
                                "X11/Xlibint.h",
-                               "X11/Xutil.h"),
+                               "X11/Xutil.h",
+                               "X11/extensions/Xinerama.h"),
    "extra_wrangler_code": """
 // min/max conflicts with STL includes.
 \n#undef min\n#undef max
