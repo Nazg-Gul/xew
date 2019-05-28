@@ -28,13 +28,16 @@
 
 // Per-platform list of libraries to be queried/
 #ifdef _WIN32
-static const char* x11_paths[] = {NULL};static const char* x11_xcb_paths[] = {NULL};
+static const char* x11_paths[] = {NULL};
+static const char* x11_xcb_paths[] = {NULL};
 #elif defined(__APPLE__)
-static const char* x11_paths[] = {NULL};static const char* x11_xcb_paths[] = {NULL};
+static const char* x11_paths[] = {NULL};
+static const char* x11_xcb_paths[] = {NULL};
 #else
 static const char* x11_paths[] = {"libX11.so.6",
                                   "libX11.so",
-                                  NULL};static const char* x11_xcb_paths[] = {"libX11-xcb.so.6",
+                                  NULL};
+static const char* x11_xcb_paths[] = {"libX11-xcb.so.6",
                                       "libX11-xcb.so",
                                       NULL};
 #endif

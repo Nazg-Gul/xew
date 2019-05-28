@@ -28,13 +28,16 @@
 
 // Per-platform list of libraries to be queried/
 #ifdef _WIN32
-static const char* xcb_paths[] = {NULL};static const char* xcb_keysyms_paths[] = {NULL};
+static const char* xcb_paths[] = {NULL};
+static const char* xcb_keysyms_paths[] = {NULL};
 #elif defined(__APPLE__)
-static const char* xcb_paths[] = {NULL};static const char* xcb_keysyms_paths[] = {NULL};
+static const char* xcb_paths[] = {NULL};
+static const char* xcb_keysyms_paths[] = {NULL};
 #else
 static const char* xcb_paths[] = {"libxcb.so.1",
                                   "libxcb.so",
-                                  NULL};static const char* xcb_keysyms_paths[] = {"libxcb-keysyms.so.1",
+                                  NULL};
+static const char* xcb_keysyms_paths[] = {"libxcb-keysyms.so.1",
                                           "libxcb-keysyms.so",
                                           NULL};
 #endif

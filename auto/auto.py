@@ -748,7 +748,13 @@ def generate_libraries_list_code(module):
     win32_libraries = ""
     apple_libraries = ""
     linux_libraries = ""
+    is_first_time = True
     for name, libraries in module["libraries"].iteritems():
+        if not is_first_time:
+            win32_libraries += "\n"
+            apple_libraries += "\n"
+            linux_libraries += "\n"
+        is_first_time = False
         win32_libraries += generate_single_libraries_list_code(
                 name, libraries, "win32")
         apple_libraries += generate_single_libraries_list_code(
