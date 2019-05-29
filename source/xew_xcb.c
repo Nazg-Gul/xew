@@ -30,10 +30,12 @@
 #ifdef _WIN32
 static const char* xcb_paths[] = {NULL};
 static const char* xcb_keysyms_paths[] = {NULL};
+static const char* xcb_icccm_paths[] = {NULL};
 static const char* xcb_xinerama_paths[] = {NULL};
 #elif defined(__APPLE__)
 static const char* xcb_paths[] = {NULL};
 static const char* xcb_keysyms_paths[] = {NULL};
+static const char* xcb_icccm_paths[] = {NULL};
 static const char* xcb_xinerama_paths[] = {NULL};
 #else
 static const char* xcb_paths[] = {"libxcb.so.1",
@@ -42,6 +44,9 @@ static const char* xcb_paths[] = {"libxcb.so.1",
 static const char* xcb_keysyms_paths[] = {"libxcb-keysyms.so.1",
                                           "libxcb-keysyms.so",
                                           NULL};
+static const char* xcb_icccm_paths[] = {"libxcb-icccm.so.4",
+                                        "libxcb-icccm.so",
+                                        NULL};
 static const char* xcb_xinerama_paths[] = {"libxcb-xinerama.so.0",
                                            "libxcb-xinerama.so",
                                            NULL};
@@ -49,6 +54,7 @@ static const char* xcb_xinerama_paths[] = {"libxcb-xinerama.so.0",
 
 static DynamicLibrary* xcb_lib = NULL;
 static DynamicLibrary* xcb_keysyms_lib = NULL;
+static DynamicLibrary* xcb_icccm_lib = NULL;
 static DynamicLibrary* xcb_xinerama_lib = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -699,6 +705,90 @@ txcb_get_modifier_mapping_keycodes_end xcb_get_modifier_mapping_keycodes_end_imp
 txcb_get_modifier_mapping_reply xcb_get_modifier_mapping_reply_impl;
 txcb_no_operation_checked xcb_no_operation_checked_impl;
 txcb_no_operation xcb_no_operation_impl;
+
+// xcb_icccm.h
+txcb_icccm_get_text_property xcb_icccm_get_text_property_impl;
+txcb_icccm_get_text_property_unchecked xcb_icccm_get_text_property_unchecked_impl;
+txcb_icccm_get_text_property_reply xcb_icccm_get_text_property_reply_impl;
+txcb_icccm_get_text_property_reply_wipe xcb_icccm_get_text_property_reply_wipe_impl;
+txcb_icccm_set_wm_name_checked xcb_icccm_set_wm_name_checked_impl;
+txcb_icccm_set_wm_name xcb_icccm_set_wm_name_impl;
+txcb_icccm_get_wm_name xcb_icccm_get_wm_name_impl;
+txcb_icccm_get_wm_name_unchecked xcb_icccm_get_wm_name_unchecked_impl;
+txcb_icccm_get_wm_name_reply xcb_icccm_get_wm_name_reply_impl;
+txcb_icccm_set_wm_icon_name_checked xcb_icccm_set_wm_icon_name_checked_impl;
+txcb_icccm_set_wm_icon_name xcb_icccm_set_wm_icon_name_impl;
+txcb_icccm_get_wm_icon_name xcb_icccm_get_wm_icon_name_impl;
+txcb_icccm_get_wm_icon_name_unchecked xcb_icccm_get_wm_icon_name_unchecked_impl;
+txcb_icccm_get_wm_icon_name_reply xcb_icccm_get_wm_icon_name_reply_impl;
+txcb_icccm_set_wm_colormap_windows_checked xcb_icccm_set_wm_colormap_windows_checked_impl;
+txcb_icccm_set_wm_colormap_windows xcb_icccm_set_wm_colormap_windows_impl;
+txcb_icccm_get_wm_colormap_windows xcb_icccm_get_wm_colormap_windows_impl;
+txcb_icccm_get_wm_colormap_windows_unchecked xcb_icccm_get_wm_colormap_windows_unchecked_impl;
+txcb_icccm_get_wm_colormap_windows_from_reply xcb_icccm_get_wm_colormap_windows_from_reply_impl;
+txcb_icccm_get_wm_colormap_windows_reply xcb_icccm_get_wm_colormap_windows_reply_impl;
+txcb_icccm_get_wm_colormap_windows_reply_wipe xcb_icccm_get_wm_colormap_windows_reply_wipe_impl;
+txcb_icccm_set_wm_client_machine_checked xcb_icccm_set_wm_client_machine_checked_impl;
+txcb_icccm_set_wm_client_machine xcb_icccm_set_wm_client_machine_impl;
+txcb_icccm_get_wm_client_machine xcb_icccm_get_wm_client_machine_impl;
+txcb_icccm_get_wm_client_machine_unchecked xcb_icccm_get_wm_client_machine_unchecked_impl;
+txcb_icccm_get_wm_client_machine_reply xcb_icccm_get_wm_client_machine_reply_impl;
+txcb_icccm_set_wm_class_checked xcb_icccm_set_wm_class_checked_impl;
+txcb_icccm_set_wm_class xcb_icccm_set_wm_class_impl;
+txcb_icccm_get_wm_class xcb_icccm_get_wm_class_impl;
+txcb_icccm_get_wm_class_unchecked xcb_icccm_get_wm_class_unchecked_impl;
+txcb_icccm_get_wm_class_from_reply xcb_icccm_get_wm_class_from_reply_impl;
+txcb_icccm_get_wm_class_reply xcb_icccm_get_wm_class_reply_impl;
+txcb_icccm_get_wm_class_reply_wipe xcb_icccm_get_wm_class_reply_wipe_impl;
+txcb_icccm_set_wm_transient_for_checked xcb_icccm_set_wm_transient_for_checked_impl;
+txcb_icccm_set_wm_transient_for xcb_icccm_set_wm_transient_for_impl;
+txcb_icccm_get_wm_transient_for xcb_icccm_get_wm_transient_for_impl;
+txcb_icccm_get_wm_transient_for_unchecked xcb_icccm_get_wm_transient_for_unchecked_impl;
+txcb_icccm_get_wm_transient_for_from_reply xcb_icccm_get_wm_transient_for_from_reply_impl;
+txcb_icccm_get_wm_transient_for_reply xcb_icccm_get_wm_transient_for_reply_impl;
+txcb_icccm_size_hints_set_position xcb_icccm_size_hints_set_position_impl;
+txcb_icccm_size_hints_set_size xcb_icccm_size_hints_set_size_impl;
+txcb_icccm_size_hints_set_min_size xcb_icccm_size_hints_set_min_size_impl;
+txcb_icccm_size_hints_set_max_size xcb_icccm_size_hints_set_max_size_impl;
+txcb_icccm_size_hints_set_resize_inc xcb_icccm_size_hints_set_resize_inc_impl;
+txcb_icccm_size_hints_set_aspect xcb_icccm_size_hints_set_aspect_impl;
+txcb_icccm_size_hints_set_base_size xcb_icccm_size_hints_set_base_size_impl;
+txcb_icccm_size_hints_set_win_gravity xcb_icccm_size_hints_set_win_gravity_impl;
+txcb_icccm_set_wm_size_hints_checked xcb_icccm_set_wm_size_hints_checked_impl;
+txcb_icccm_set_wm_size_hints xcb_icccm_set_wm_size_hints_impl;
+txcb_icccm_get_wm_size_hints xcb_icccm_get_wm_size_hints_impl;
+txcb_icccm_get_wm_size_hints_unchecked xcb_icccm_get_wm_size_hints_unchecked_impl;
+txcb_icccm_get_wm_size_hints_reply xcb_icccm_get_wm_size_hints_reply_impl;
+txcb_icccm_set_wm_normal_hints_checked xcb_icccm_set_wm_normal_hints_checked_impl;
+txcb_icccm_set_wm_normal_hints xcb_icccm_set_wm_normal_hints_impl;
+txcb_icccm_get_wm_normal_hints xcb_icccm_get_wm_normal_hints_impl;
+txcb_icccm_get_wm_normal_hints_unchecked xcb_icccm_get_wm_normal_hints_unchecked_impl;
+txcb_icccm_get_wm_size_hints_from_reply xcb_icccm_get_wm_size_hints_from_reply_impl;
+txcb_icccm_get_wm_normal_hints_reply xcb_icccm_get_wm_normal_hints_reply_impl;
+txcb_icccm_wm_hints_get_urgency xcb_icccm_wm_hints_get_urgency_impl;
+txcb_icccm_wm_hints_set_input xcb_icccm_wm_hints_set_input_impl;
+txcb_icccm_wm_hints_set_iconic xcb_icccm_wm_hints_set_iconic_impl;
+txcb_icccm_wm_hints_set_normal xcb_icccm_wm_hints_set_normal_impl;
+txcb_icccm_wm_hints_set_withdrawn xcb_icccm_wm_hints_set_withdrawn_impl;
+txcb_icccm_wm_hints_set_none xcb_icccm_wm_hints_set_none_impl;
+txcb_icccm_wm_hints_set_icon_pixmap xcb_icccm_wm_hints_set_icon_pixmap_impl;
+txcb_icccm_wm_hints_set_icon_mask xcb_icccm_wm_hints_set_icon_mask_impl;
+txcb_icccm_wm_hints_set_icon_window xcb_icccm_wm_hints_set_icon_window_impl;
+txcb_icccm_wm_hints_set_window_group xcb_icccm_wm_hints_set_window_group_impl;
+txcb_icccm_wm_hints_set_urgency xcb_icccm_wm_hints_set_urgency_impl;
+txcb_icccm_set_wm_hints_checked xcb_icccm_set_wm_hints_checked_impl;
+txcb_icccm_set_wm_hints xcb_icccm_set_wm_hints_impl;
+txcb_icccm_get_wm_hints xcb_icccm_get_wm_hints_impl;
+txcb_icccm_get_wm_hints_unchecked xcb_icccm_get_wm_hints_unchecked_impl;
+txcb_icccm_get_wm_hints_from_reply xcb_icccm_get_wm_hints_from_reply_impl;
+txcb_icccm_get_wm_hints_reply xcb_icccm_get_wm_hints_reply_impl;
+txcb_icccm_set_wm_protocols_checked xcb_icccm_set_wm_protocols_checked_impl;
+txcb_icccm_set_wm_protocols xcb_icccm_set_wm_protocols_impl;
+txcb_icccm_get_wm_protocols xcb_icccm_get_wm_protocols_impl;
+txcb_icccm_get_wm_protocols_unchecked xcb_icccm_get_wm_protocols_unchecked_impl;
+txcb_icccm_get_wm_protocols_from_reply xcb_icccm_get_wm_protocols_from_reply_impl;
+txcb_icccm_get_wm_protocols_reply xcb_icccm_get_wm_protocols_reply_impl;
+txcb_icccm_get_wm_protocols_reply_wipe xcb_icccm_get_wm_protocols_reply_wipe_impl;
 
 // xcb_keysyms.h
 txcb_key_symbols_alloc xcb_key_symbols_alloc_impl;
@@ -4084,6 +4174,442 @@ xcb_void_cookie_t xcb_no_operation(xcb_connection_t* c) {
   return xcb_no_operation_impl(c);
 }
 
+// xcb_icccm.h
+xcb_get_property_cookie_t xcb_icccm_get_text_property(xcb_connection_t* c, xcb_window_t window, xcb_atom_t property) {
+  return xcb_icccm_get_text_property_impl(c, window, property);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_text_property_unchecked(xcb_connection_t* c, xcb_window_t window, xcb_atom_t property) {
+  return xcb_icccm_get_text_property_unchecked_impl(c, window, property);
+}
+
+uint8_t xcb_icccm_get_text_property_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_text_property_reply_t* prop,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_text_property_reply_impl(c, cookie, prop, e);
+}
+
+void xcb_icccm_get_text_property_reply_wipe(xcb_icccm_get_text_property_reply_t* prop) {
+  return xcb_icccm_get_text_property_reply_wipe_impl(prop);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_name_checked(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t encoding,
+    uint8_t format,
+    uint32_t name_len,
+    const char* name) {
+  return xcb_icccm_set_wm_name_checked_impl(c, window, encoding, format, name_len, name);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_name(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t encoding,
+    uint8_t format,
+    uint32_t name_len,
+    const char* name) {
+  return xcb_icccm_set_wm_name_impl(c, window, encoding, format, name_len, name);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_name(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_name_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_name_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_name_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_name_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_text_property_reply_t* prop,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_name_reply_impl(c, cookie, prop, e);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_icon_name_checked(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t encoding,
+    uint8_t format,
+    uint32_t name_len,
+    const char* name) {
+  return xcb_icccm_set_wm_icon_name_checked_impl(c, window, encoding, format, name_len, name);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_icon_name(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t encoding,
+    uint8_t format,
+    uint32_t name_len,
+    const char* name) {
+  return xcb_icccm_set_wm_icon_name_impl(c, window, encoding, format, name_len, name);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_icon_name(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_icon_name_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_icon_name_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_icon_name_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_icon_name_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_text_property_reply_t* prop,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_icon_name_reply_impl(c, cookie, prop, e);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_colormap_windows_checked(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t wm_colormap_windows_atom,
+    uint32_t list_len,
+    const xcb_window_t* list) {
+  return xcb_icccm_set_wm_colormap_windows_checked_impl(c, window, wm_colormap_windows_atom, list_len, list);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_colormap_windows(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t wm_colormap_windows_atom,
+    uint32_t list_len,
+    const xcb_window_t* list) {
+  return xcb_icccm_set_wm_colormap_windows_impl(c, window, wm_colormap_windows_atom, list_len, list);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_colormap_windows(xcb_connection_t* c, xcb_window_t window, xcb_atom_t wm_colormap_windows_atom) {
+  return xcb_icccm_get_wm_colormap_windows_impl(c, window, wm_colormap_windows_atom);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_colormap_windows_unchecked(xcb_connection_t* c, xcb_window_t window, xcb_atom_t wm_colormap_windows_atom) {
+  return xcb_icccm_get_wm_colormap_windows_unchecked_impl(c, window, wm_colormap_windows_atom);
+}
+
+uint8_t xcb_icccm_get_wm_colormap_windows_from_reply(
+    xcb_get_property_reply_t* reply,
+    xcb_icccm_get_wm_colormap_windows_reply_t* colormap_windows) {
+  return xcb_icccm_get_wm_colormap_windows_from_reply_impl(reply, colormap_windows);
+}
+
+uint8_t xcb_icccm_get_wm_colormap_windows_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_wm_colormap_windows_reply_t* windows,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_colormap_windows_reply_impl(c, cookie, windows, e);
+}
+
+void xcb_icccm_get_wm_colormap_windows_reply_wipe(xcb_icccm_get_wm_colormap_windows_reply_t* windows) {
+  return xcb_icccm_get_wm_colormap_windows_reply_wipe_impl(windows);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_client_machine_checked(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t encoding,
+    uint8_t format,
+    uint32_t name_len,
+    const char* name) {
+  return xcb_icccm_set_wm_client_machine_checked_impl(c, window, encoding, format, name_len, name);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_client_machine(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t encoding,
+    uint8_t format,
+    uint32_t name_len,
+    const char* name) {
+  return xcb_icccm_set_wm_client_machine_impl(c, window, encoding, format, name_len, name);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_client_machine(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_client_machine_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_client_machine_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_client_machine_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_client_machine_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_text_property_reply_t* prop,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_client_machine_reply_impl(c, cookie, prop, e);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_class_checked(xcb_connection_t* c, xcb_window_t window, uint32_t class_len, const char* class_name) {
+  return xcb_icccm_set_wm_class_checked_impl(c, window, class_len, class_name);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_class(xcb_connection_t* c, xcb_window_t window, uint32_t class_len, const char* class_name) {
+  return xcb_icccm_set_wm_class_impl(c, window, class_len, class_name);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_class(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_class_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_class_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_class_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_class_from_reply(xcb_icccm_get_wm_class_reply_t* prop, xcb_get_property_reply_t* reply) {
+  return xcb_icccm_get_wm_class_from_reply_impl(prop, reply);
+}
+
+uint8_t xcb_icccm_get_wm_class_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_wm_class_reply_t* prop,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_class_reply_impl(c, cookie, prop, e);
+}
+
+void xcb_icccm_get_wm_class_reply_wipe(xcb_icccm_get_wm_class_reply_t* prop) {
+  return xcb_icccm_get_wm_class_reply_wipe_impl(prop);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_transient_for_checked(xcb_connection_t* c, xcb_window_t window, xcb_window_t transient_for_window) {
+  return xcb_icccm_set_wm_transient_for_checked_impl(c, window, transient_for_window);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_transient_for(xcb_connection_t* c, xcb_window_t window, xcb_window_t transient_for_window) {
+  return xcb_icccm_set_wm_transient_for_impl(c, window, transient_for_window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_transient_for(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_transient_for_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_transient_for_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_transient_for_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_transient_for_from_reply(xcb_window_t* prop, xcb_get_property_reply_t* reply) {
+  return xcb_icccm_get_wm_transient_for_from_reply_impl(prop, reply);
+}
+
+uint8_t xcb_icccm_get_wm_transient_for_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_window_t* prop,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_transient_for_reply_impl(c, cookie, prop, e);
+}
+
+void xcb_icccm_size_hints_set_position(xcb_size_hints_t* hints, int user_specified, int32_t x, int32_t y) {
+  return xcb_icccm_size_hints_set_position_impl(hints, user_specified, x, y);
+}
+
+void xcb_icccm_size_hints_set_size(xcb_size_hints_t* hints, int user_specified, int32_t width, int32_t height) {
+  return xcb_icccm_size_hints_set_size_impl(hints, user_specified, width, height);
+}
+
+void xcb_icccm_size_hints_set_min_size(xcb_size_hints_t* hints, int32_t min_width, int32_t min_height) {
+  return xcb_icccm_size_hints_set_min_size_impl(hints, min_width, min_height);
+}
+
+void xcb_icccm_size_hints_set_max_size(xcb_size_hints_t* hints, int32_t max_width, int32_t max_height) {
+  return xcb_icccm_size_hints_set_max_size_impl(hints, max_width, max_height);
+}
+
+void xcb_icccm_size_hints_set_resize_inc(xcb_size_hints_t* hints, int32_t width_inc, int32_t height_inc) {
+  return xcb_icccm_size_hints_set_resize_inc_impl(hints, width_inc, height_inc);
+}
+
+void xcb_icccm_size_hints_set_aspect(
+    xcb_size_hints_t* hints,
+    int32_t min_aspect_num,
+    int32_t min_aspect_den,
+    int32_t max_aspect_num,
+    int32_t max_aspect_den) {
+  return xcb_icccm_size_hints_set_aspect_impl(hints, min_aspect_num, min_aspect_den, max_aspect_num, max_aspect_den);
+}
+
+void xcb_icccm_size_hints_set_base_size(xcb_size_hints_t* hints, int32_t base_width, int32_t base_height) {
+  return xcb_icccm_size_hints_set_base_size_impl(hints, base_width, base_height);
+}
+
+void xcb_icccm_size_hints_set_win_gravity(xcb_size_hints_t* hints, xcb_gravity_t win_gravity) {
+  return xcb_icccm_size_hints_set_win_gravity_impl(hints, win_gravity);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_size_hints_checked(xcb_connection_t* c, xcb_window_t window, xcb_atom_t property, xcb_size_hints_t* hints) {
+  return xcb_icccm_set_wm_size_hints_checked_impl(c, window, property, hints);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_size_hints(xcb_connection_t* c, xcb_window_t window, xcb_atom_t property, xcb_size_hints_t* hints) {
+  return xcb_icccm_set_wm_size_hints_impl(c, window, property, hints);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_size_hints(xcb_connection_t* c, xcb_window_t window, xcb_atom_t property) {
+  return xcb_icccm_get_wm_size_hints_impl(c, window, property);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_size_hints_unchecked(xcb_connection_t* c, xcb_window_t window, xcb_atom_t property) {
+  return xcb_icccm_get_wm_size_hints_unchecked_impl(c, window, property);
+}
+
+uint8_t xcb_icccm_get_wm_size_hints_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_size_hints_t* hints,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_size_hints_reply_impl(c, cookie, hints, e);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_normal_hints_checked(xcb_connection_t* c, xcb_window_t window, xcb_size_hints_t* hints) {
+  return xcb_icccm_set_wm_normal_hints_checked_impl(c, window, hints);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_normal_hints(xcb_connection_t* c, xcb_window_t window, xcb_size_hints_t* hints) {
+  return xcb_icccm_set_wm_normal_hints_impl(c, window, hints);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_normal_hints(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_normal_hints_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_normal_hints_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_normal_hints_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_size_hints_from_reply(xcb_size_hints_t* hints, xcb_get_property_reply_t* reply) {
+  return xcb_icccm_get_wm_size_hints_from_reply_impl(hints, reply);
+}
+
+uint8_t xcb_icccm_get_wm_normal_hints_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_size_hints_t* hints,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_normal_hints_reply_impl(c, cookie, hints, e);
+}
+
+uint32_t xcb_icccm_wm_hints_get_urgency(xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_wm_hints_get_urgency_impl(hints);
+}
+
+void xcb_icccm_wm_hints_set_input(xcb_icccm_wm_hints_t* hints, uint8_t input) {
+  return xcb_icccm_wm_hints_set_input_impl(hints, input);
+}
+
+void xcb_icccm_wm_hints_set_iconic(xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_wm_hints_set_iconic_impl(hints);
+}
+
+void xcb_icccm_wm_hints_set_normal(xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_wm_hints_set_normal_impl(hints);
+}
+
+void xcb_icccm_wm_hints_set_withdrawn(xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_wm_hints_set_withdrawn_impl(hints);
+}
+
+void xcb_icccm_wm_hints_set_none(xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_wm_hints_set_none_impl(hints);
+}
+
+void xcb_icccm_wm_hints_set_icon_pixmap(xcb_icccm_wm_hints_t* hints, xcb_pixmap_t icon_pixmap) {
+  return xcb_icccm_wm_hints_set_icon_pixmap_impl(hints, icon_pixmap);
+}
+
+void xcb_icccm_wm_hints_set_icon_mask(xcb_icccm_wm_hints_t* hints, xcb_pixmap_t icon_mask) {
+  return xcb_icccm_wm_hints_set_icon_mask_impl(hints, icon_mask);
+}
+
+void xcb_icccm_wm_hints_set_icon_window(xcb_icccm_wm_hints_t* hints, xcb_window_t icon_window) {
+  return xcb_icccm_wm_hints_set_icon_window_impl(hints, icon_window);
+}
+
+void xcb_icccm_wm_hints_set_window_group(xcb_icccm_wm_hints_t* hints, xcb_window_t window_group) {
+  return xcb_icccm_wm_hints_set_window_group_impl(hints, window_group);
+}
+
+void xcb_icccm_wm_hints_set_urgency(xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_wm_hints_set_urgency_impl(hints);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_hints_checked(xcb_connection_t* c, xcb_window_t window, xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_set_wm_hints_checked_impl(c, window, hints);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_hints(xcb_connection_t* c, xcb_window_t window, xcb_icccm_wm_hints_t* hints) {
+  return xcb_icccm_set_wm_hints_impl(c, window, hints);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_hints(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_hints_impl(c, window);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_hints_unchecked(xcb_connection_t* c, xcb_window_t window) {
+  return xcb_icccm_get_wm_hints_unchecked_impl(c, window);
+}
+
+uint8_t xcb_icccm_get_wm_hints_from_reply(xcb_icccm_wm_hints_t* hints, xcb_get_property_reply_t* reply) {
+  return xcb_icccm_get_wm_hints_from_reply_impl(hints, reply);
+}
+
+uint8_t xcb_icccm_get_wm_hints_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_wm_hints_t* hints,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_hints_reply_impl(c, cookie, hints, e);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_protocols_checked(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t wm_protocols,
+    uint32_t list_len,
+    xcb_atom_t* list) {
+  return xcb_icccm_set_wm_protocols_checked_impl(c, window, wm_protocols, list_len, list);
+}
+
+xcb_void_cookie_t xcb_icccm_set_wm_protocols(
+    xcb_connection_t* c,
+    xcb_window_t window,
+    xcb_atom_t wm_protocols,
+    uint32_t list_len,
+    xcb_atom_t* list) {
+  return xcb_icccm_set_wm_protocols_impl(c, window, wm_protocols, list_len, list);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_protocols(xcb_connection_t* c, xcb_window_t window, xcb_atom_t wm_protocol_atom) {
+  return xcb_icccm_get_wm_protocols_impl(c, window, wm_protocol_atom);
+}
+
+xcb_get_property_cookie_t xcb_icccm_get_wm_protocols_unchecked(xcb_connection_t* c, xcb_window_t window, xcb_atom_t wm_protocol_atom) {
+  return xcb_icccm_get_wm_protocols_unchecked_impl(c, window, wm_protocol_atom);
+}
+
+uint8_t xcb_icccm_get_wm_protocols_from_reply(xcb_get_property_reply_t* reply, xcb_icccm_get_wm_protocols_reply_t* protocols) {
+  return xcb_icccm_get_wm_protocols_from_reply_impl(reply, protocols);
+}
+
+uint8_t xcb_icccm_get_wm_protocols_reply(
+    xcb_connection_t* c,
+    xcb_get_property_cookie_t cookie,
+    xcb_icccm_get_wm_protocols_reply_t* protocols,
+    xcb_generic_error_t** e) {
+  return xcb_icccm_get_wm_protocols_reply_impl(c, cookie, protocols, e);
+}
+
+void xcb_icccm_get_wm_protocols_reply_wipe(xcb_icccm_get_wm_protocols_reply_t* protocols) {
+  return xcb_icccm_get_wm_protocols_reply_wipe_impl(protocols);
+}
+
 // xcb_keysyms.h
 xcb_key_symbols_t* xcb_key_symbols_alloc(xcb_connection_t* c) {
   return xcb_key_symbols_alloc_impl(c);
@@ -4281,6 +4807,7 @@ static XewErrorCode openLibraries() {
   if (xcb_keysyms_lib == NULL) {
     return XEW_ERROR_OPEN_FAILED;
   }
+  xcb_icccm_lib = xew_dynamic_library_open_find(xcb_icccm_paths);
   xcb_xinerama_lib = xew_dynamic_library_open_find(xcb_xinerama_paths);
   return XEW_SUCCESS;
 }
@@ -4930,6 +5457,89 @@ static void fetchPointersFromLibrary(void) {
   _LIBRARY_FIND_IMPL(xcb_lib, xcb_get_modifier_mapping_reply);
   _LIBRARY_FIND_IMPL(xcb_lib, xcb_no_operation_checked);
   _LIBRARY_FIND_IMPL(xcb_lib, xcb_no_operation);
+  // xcb_icccm.h
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_text_property);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_text_property_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_text_property_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_text_property_reply_wipe);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_name_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_name);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_name);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_name_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_name_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_icon_name_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_icon_name);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_icon_name);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_icon_name_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_icon_name_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_colormap_windows_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_colormap_windows);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_colormap_windows);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_colormap_windows_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_colormap_windows_from_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_colormap_windows_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_colormap_windows_reply_wipe);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_client_machine_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_client_machine);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_client_machine);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_client_machine_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_client_machine_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_class_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_class);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_class);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_class_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_class_from_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_class_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_class_reply_wipe);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_transient_for_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_transient_for);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_transient_for);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_transient_for_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_transient_for_from_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_transient_for_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_position);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_size);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_min_size);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_max_size);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_resize_inc);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_aspect);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_base_size);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_size_hints_set_win_gravity);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_size_hints_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_size_hints);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_size_hints);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_size_hints_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_size_hints_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_normal_hints_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_normal_hints);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_normal_hints);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_normal_hints_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_size_hints_from_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_normal_hints_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_get_urgency);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_input);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_iconic);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_normal);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_withdrawn);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_none);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_icon_pixmap);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_icon_mask);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_icon_window);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_window_group);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_wm_hints_set_urgency);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_hints_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_hints);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_hints);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_hints_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_hints_from_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_hints_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_protocols_checked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_set_wm_protocols);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_protocols);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_protocols_unchecked);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_protocols_from_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_protocols_reply);
+  _LIBRARY_FIND_IMPL(xcb_icccm_lib, xcb_icccm_get_wm_protocols_reply_wipe);
   // xcb_keysyms.h
   _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_symbols_alloc);
   _LIBRARY_FIND_IMPL(xcb_keysyms_lib, xcb_key_symbols_free);

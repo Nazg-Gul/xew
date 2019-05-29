@@ -77,10 +77,16 @@ MODULES = (
        "required": False,
        "headers": ("xinerama.h",)
      },
+     "xcb_icccm": {
+       "paths": {"linux": ("libxcb-icccm.so.4", "libxcb-icccm.so")},
+       "required": False,
+       "headers": ("xcb_icccm.h",)
+     },
    },
    "include_directory": "/usr/include/xcb",
    "headers": ("xcb.h",
                "xproto.h",
+               "xcb_icccm.h",
                "xcb_keysyms.h",
                "xinerama.h"),
    "extra_wrangler_includes": ("stdarg.h",
