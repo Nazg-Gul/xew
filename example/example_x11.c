@@ -60,6 +60,27 @@ static void openTestWindow(void) {
   XCloseDisplay(display);
 }
 
+static void testXinerama(void) {
+  Display* display = XOpenDisplay(NULL);
+  if (!XineramaIsActive(display)) {
+    printf("Xinerama is not active.\n");
+    XCloseDisplay(display);
+    return;
+  }
+  printf("Xinerama is active.\n");
+  int num_screens;
+  XineramaScreenInfo* screen_info = XineramaQueryScreens(display, &num_screens);
+  printf("Number of Xinerama screens: %d\n", num_screens);
+  for (int i = 0; i < num_screens; ++i) {
+    printf("- Screen %d: origin:(%d, %d) resolution:(%d, %d)\n",
+           i,
+           screen_info[i].x_org, screen_info[i].y_org,
+           screen_info[i].width, screen_info[i].height);
+  }
+  XFree(screen_info);
+  XCloseDisplay(display);
+}
+
 int main(int argc, char* argv[]) {
   (void) argc;  // Ignored.
   (void) argv;  // Ignored.
@@ -67,6 +88,7 @@ int main(int argc, char* argv[]) {
     printf("X11 found\n");
     if (X11_HAS_SYMBOL(XineramaIsActive)) {
       printf("Found Xinerama\n");
+      testXinerama();
     }
     openTestWindow();
   }

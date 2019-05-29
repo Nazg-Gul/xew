@@ -123,7 +123,7 @@ MODULES = (
                                "X11/Xlib.h",
                                "X11/Xlibint.h",
                                "X11/Xutil.h",
-                               "X11/extensions/Xinerama.h"),
+                               "xew_x11_xinerama.h"),
    "extra_wrangler_code": """
 // min/max conflicts with STL includes.
 \n#undef min\n#undef max
@@ -1432,7 +1432,10 @@ def construct_extra_wrangler_includes(module_context):
     module = module_context.module
     lines = []
     for include in module["extra_wrangler_includes"]:
-        lines.append("#include <{}>".format(include))
+        if include.startswith("xew"):
+            lines.append("#include \"{}\"".format(include))
+        else:
+            lines.append("#include <{}>".format(include))
     return "\n".join(lines)
 
 

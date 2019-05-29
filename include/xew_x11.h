@@ -31,7 +31,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
-#include <X11/extensions/Xinerama.h>
+#include "xew_x11_xinerama.h"
 
 #ifdef __cplusplus
 extern "C" {
