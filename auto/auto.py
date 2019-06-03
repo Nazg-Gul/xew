@@ -136,7 +136,7 @@ MODULES = (
                                "X11/Xlibint.h",
                                "X11/Xutil.h",
                                "X11/cursorfont.h",
-                               "X11/Xcursor/Xcursor.h",
+                               "xew_x11_xcursor.h",
                                "xew_x11_xinerama.h"),
    "extra_wrangler_code": """
 // min/max conflicts with STL includes.

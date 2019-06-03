@@ -32,7 +32,7 @@
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
-#include <X11/Xcursor/Xcursor.h>
+#include "xew_x11_xcursor.h"
 #include "xew_x11_xinerama.h"
 
 #ifdef __cplusplus
