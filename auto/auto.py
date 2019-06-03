@@ -114,7 +114,12 @@ MODULES = (
        "paths": {"linux": ("libXinerama.so.1", "libXinerama.so")},
        "required": False,
        "headers": ("Xinerama.h",)
-     }
+     },
+     "x11_cursor": {
+       "paths": {"linux": ("libXcursor.so.1", "libXcursor.so")},
+       "required": False,
+       "headers": ("Xcursor.h"),
+     },
    },
    "include_directory": "/usr/include/X11",
    "headers": ("Xlib.h",
@@ -122,6 +127,7 @@ MODULES = (
                "Xlibint.h",
                "XKBlib.h",
                "Xutil.h",
+               "Xcursor/Xcursor.h",
                "extensions/Xinerama.h"),
    "extra_wrangler_includes": ("X11/keysym.h",
                                "X11/Xatom.h",
@@ -129,6 +135,8 @@ MODULES = (
                                "X11/Xlib.h",
                                "X11/Xlibint.h",
                                "X11/Xutil.h",
+                               "X11/cursorfont.h",
+                               "X11/Xcursor/Xcursor.h",
                                "xew_x11_xinerama.h"),
    "extra_wrangler_code": """
 // min/max conflicts with STL includes.
@@ -368,7 +376,7 @@ def get_argument_info_from_tokens(tokens):
              tokens[-1].kind not in (TokenKind.KEYWORD, TokenKind.PUNCTUATION):
             name = tokens[-1].spelling
             type_tokens = tokens[:-1]
-        elif tokens[-1].spelling not in ('void', '...', ')'):
+        elif tokens[-1].spelling not in ('void', '...', ')', ']'):
             name = "arg"
             type_tokens = tokens[:]
 
@@ -652,9 +660,11 @@ def generate_functor_defintiions(functions, use_wrapper):
 def extract_argument_name(argument):
     if argument.name:
         return argument.name
-    t = argument.type
+    t = argument.type.strip()
     if t == "void":
         return ""
+    if t.endswith(']'):
+        return re.sub("^(([A-Za-z0-9_]+\s)+)?([A-Za-z0-9_]+)\s\[.*", "\\3", t)
     t = re.sub("^([A-Za-z0-9\s]+)", "", t)
     if t.startswith("(*"):
         return re.sub("^\(\*([A-Za-z0-9_]+).*", "\\1", t)

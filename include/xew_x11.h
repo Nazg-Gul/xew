@@ -31,6 +31,8 @@
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
+#include <X11/cursorfont.h>
+#include <X11/Xcursor/Xcursor.h>
 #include "xew_x11_xinerama.h"
 
 #ifdef __cplusplus
@@ -2403,6 +2405,134 @@ typedef int (*tXWMGeometry)(
     int* gravity_return);
 typedef int (*tXXorRegion)(Region sra, Region srb, Region dr_return);
 
+typedef XcursorImage* (*tXcursorImageCreate)(int width, int height);
+typedef void (*tXcursorImageDestroy)(XcursorImage* image);
+typedef XcursorImages* (*tXcursorImagesCreate)(int size);
+typedef void (*tXcursorImagesDestroy)(XcursorImages* images);
+typedef void (*tXcursorImagesSetName)(XcursorImages* images, const char* name);
+typedef XcursorCursors* (*tXcursorCursorsCreate)(Display* dpy, int size);
+typedef void (*tXcursorCursorsDestroy)(XcursorCursors* cursors);
+typedef XcursorAnimate* (*tXcursorAnimateCreate)(XcursorCursors* cursors);
+typedef void (*tXcursorAnimateDestroy)(XcursorAnimate* animate);
+typedef Cursor (*tXcursorAnimateNext)(XcursorAnimate* animate);
+typedef XcursorComment* (*tXcursorCommentCreate)(
+    XcursorUInt comment_type,
+    int length);
+typedef void (*tXcursorCommentDestroy)(XcursorComment* comment);
+typedef XcursorComments* (*tXcursorCommentsCreate)(int size);
+typedef void (*tXcursorCommentsDestroy)(XcursorComments* comments);
+typedef XcursorImage* (*tXcursorXcFileLoadImage)(XcursorFile* file, int size);
+typedef XcursorImages* (*tXcursorXcFileLoadImages)(XcursorFile* file, int size);
+typedef XcursorImages* (*tXcursorXcFileLoadAllImages)(XcursorFile* file);
+typedef XcursorBool (*tXcursorXcFileLoad)(
+    XcursorFile* file,
+    XcursorComments** commentsp,
+    XcursorImages** imagesp);
+typedef XcursorBool (*tXcursorXcFileSave)(
+    XcursorFile* file,
+    const XcursorComments* comments,
+    const XcursorImages* images);
+typedef XcursorImage* (*tXcursorFileLoadImage)(FILE* file, int size);
+typedef XcursorImages* (*tXcursorFileLoadImages)(FILE* file, int size);
+typedef XcursorImages* (*tXcursorFileLoadAllImages)(FILE* file);
+typedef XcursorBool (*tXcursorFileLoad)(
+    FILE* file,
+    XcursorComments** commentsp,
+    XcursorImages** imagesp);
+typedef XcursorBool (*tXcursorFileSaveImages)(
+    FILE* file,
+    const XcursorImages* images);
+typedef XcursorBool (*tXcursorFileSave)(
+    FILE* file,
+    const XcursorComments* comments,
+    const XcursorImages* images);
+typedef XcursorImage* (*tXcursorFilenameLoadImage)(const char* filename, int size);
+typedef XcursorImages* (*tXcursorFilenameLoadImages)(
+    const char* filename,
+    int size);
+typedef XcursorImages* (*tXcursorFilenameLoadAllImages)(const char* filename);
+typedef XcursorBool (*tXcursorFilenameLoad)(
+    const char* file,
+    XcursorComments** commentsp,
+    XcursorImages** imagesp);
+typedef XcursorBool (*tXcursorFilenameSaveImages)(
+    const char* filename,
+    const XcursorImages* images);
+typedef XcursorBool (*tXcursorFilenameSave)(
+    const char* file,
+    const XcursorComments* comments,
+    const XcursorImages* images);
+typedef XcursorImage* (*tXcursorLibraryLoadImage)(
+    const char* library,
+    const char* theme,
+    int size);
+typedef XcursorImages* (*tXcursorLibraryLoadImages)(
+    const char* library,
+    const char* theme,
+    int size);
+typedef const char* (*tXcursorLibraryPath)(void);
+typedef int (*tXcursorLibraryShape)(const char* library);
+typedef Cursor (*tXcursorImageLoadCursor)(Display* dpy, const XcursorImage* image);
+typedef XcursorCursors* (*tXcursorImagesLoadCursors)(
+    Display* dpy,
+    const XcursorImages* images);
+typedef Cursor (*tXcursorImagesLoadCursor)(
+    Display* dpy,
+    const XcursorImages* images);
+typedef Cursor (*tXcursorFilenameLoadCursor)(Display* dpy, const char* file);
+typedef XcursorCursors* (*tXcursorFilenameLoadCursors)(
+    Display* dpy,
+    const char* file);
+typedef Cursor (*tXcursorLibraryLoadCursor)(Display* dpy, const char* file);
+typedef XcursorCursors* (*tXcursorLibraryLoadCursors)(
+    Display* dpy,
+    const char* file);
+typedef XcursorImage* (*tXcursorShapeLoadImage)(
+    unsigned int shape,
+    const char* theme,
+    int size);
+typedef XcursorImages* (*tXcursorShapeLoadImages)(
+    unsigned int shape,
+    const char* theme,
+    int size);
+typedef Cursor (*tXcursorShapeLoadCursor)(Display* dpy, unsigned int shape);
+typedef XcursorCursors* (*tXcursorShapeLoadCursors)(
+    Display* dpy,
+    unsigned int shape);
+typedef Cursor (*tXcursorTryShapeCursor)(
+    Display* dpy,
+    Font source_font,
+    Font mask_font,
+    unsigned int source_char,
+    unsigned int mask_char,
+    XColor _Xconst* foreground,
+    XColor _Xconst* background);
+typedef void (*tXcursorNoticeCreateBitmap)(
+    Display* dpy,
+    Pixmap pid,
+    unsigned int width,
+    unsigned int height);
+typedef void (*tXcursorNoticePutBitmap)(Display* dpy, Drawable draw, XImage* image);
+typedef Cursor (*tXcursorTryShapeBitmapCursor)(
+    Display* dpy,
+    Pixmap source,
+    Pixmap mask,
+    XColor* foreground,
+    XColor* background,
+    unsigned int x,
+    unsigned int y);
+typedef void (*tXcursorImageHash)(
+    XImage* image,
+    unsigned char hash [XCURSOR_BITMAP_HASH_SIZE]);
+typedef XcursorBool (*tXcursorSupportsARGB)(Display* dpy);
+typedef XcursorBool (*tXcursorSupportsAnim)(Display* dpy);
+typedef XcursorBool (*tXcursorSetDefaultSize)(Display* dpy, int size);
+typedef int (*tXcursorGetDefaultSize)(Display* dpy);
+typedef XcursorBool (*tXcursorSetTheme)(Display* dpy, const char* theme);
+typedef char* (*tXcursorGetTheme)(Display* dpy);
+typedef XcursorBool (*tXcursorGetThemeCore)(Display* dpy);
+typedef XcursorBool (*tXcursorSetThemeCore)(Display* dpy, XcursorBool theme_core);
+
 typedef Bool (*tXineramaQueryExtension)(
     Display* dpy,
     int* event_base,
@@ -3118,6 +3248,67 @@ extern tXUnionRectWithRegion XUnionRectWithRegion_impl;
 extern tXUnionRegion XUnionRegion_impl;
 extern tXWMGeometry XWMGeometry_impl;
 extern tXXorRegion XXorRegion_impl;
+
+// Xcursor.h
+extern tXcursorImageCreate XcursorImageCreate_impl;
+extern tXcursorImageDestroy XcursorImageDestroy_impl;
+extern tXcursorImagesCreate XcursorImagesCreate_impl;
+extern tXcursorImagesDestroy XcursorImagesDestroy_impl;
+extern tXcursorImagesSetName XcursorImagesSetName_impl;
+extern tXcursorCursorsCreate XcursorCursorsCreate_impl;
+extern tXcursorCursorsDestroy XcursorCursorsDestroy_impl;
+extern tXcursorAnimateCreate XcursorAnimateCreate_impl;
+extern tXcursorAnimateDestroy XcursorAnimateDestroy_impl;
+extern tXcursorAnimateNext XcursorAnimateNext_impl;
+extern tXcursorCommentCreate XcursorCommentCreate_impl;
+extern tXcursorCommentDestroy XcursorCommentDestroy_impl;
+extern tXcursorCommentsCreate XcursorCommentsCreate_impl;
+extern tXcursorCommentsDestroy XcursorCommentsDestroy_impl;
+extern tXcursorXcFileLoadImage XcursorXcFileLoadImage_impl;
+extern tXcursorXcFileLoadImages XcursorXcFileLoadImages_impl;
+extern tXcursorXcFileLoadAllImages XcursorXcFileLoadAllImages_impl;
+extern tXcursorXcFileLoad XcursorXcFileLoad_impl;
+extern tXcursorXcFileSave XcursorXcFileSave_impl;
+extern tXcursorFileLoadImage XcursorFileLoadImage_impl;
+extern tXcursorFileLoadImages XcursorFileLoadImages_impl;
+extern tXcursorFileLoadAllImages XcursorFileLoadAllImages_impl;
+extern tXcursorFileLoad XcursorFileLoad_impl;
+extern tXcursorFileSaveImages XcursorFileSaveImages_impl;
+extern tXcursorFileSave XcursorFileSave_impl;
+extern tXcursorFilenameLoadImage XcursorFilenameLoadImage_impl;
+extern tXcursorFilenameLoadImages XcursorFilenameLoadImages_impl;
+extern tXcursorFilenameLoadAllImages XcursorFilenameLoadAllImages_impl;
+extern tXcursorFilenameLoad XcursorFilenameLoad_impl;
+extern tXcursorFilenameSaveImages XcursorFilenameSaveImages_impl;
+extern tXcursorFilenameSave XcursorFilenameSave_impl;
+extern tXcursorLibraryLoadImage XcursorLibraryLoadImage_impl;
+extern tXcursorLibraryLoadImages XcursorLibraryLoadImages_impl;
+extern tXcursorLibraryPath XcursorLibraryPath_impl;
+extern tXcursorLibraryShape XcursorLibraryShape_impl;
+extern tXcursorImageLoadCursor XcursorImageLoadCursor_impl;
+extern tXcursorImagesLoadCursors XcursorImagesLoadCursors_impl;
+extern tXcursorImagesLoadCursor XcursorImagesLoadCursor_impl;
+extern tXcursorFilenameLoadCursor XcursorFilenameLoadCursor_impl;
+extern tXcursorFilenameLoadCursors XcursorFilenameLoadCursors_impl;
+extern tXcursorLibraryLoadCursor XcursorLibraryLoadCursor_impl;
+extern tXcursorLibraryLoadCursors XcursorLibraryLoadCursors_impl;
+extern tXcursorShapeLoadImage XcursorShapeLoadImage_impl;
+extern tXcursorShapeLoadImages XcursorShapeLoadImages_impl;
+extern tXcursorShapeLoadCursor XcursorShapeLoadCursor_impl;
+extern tXcursorShapeLoadCursors XcursorShapeLoadCursors_impl;
+extern tXcursorTryShapeCursor XcursorTryShapeCursor_impl;
+extern tXcursorNoticeCreateBitmap XcursorNoticeCreateBitmap_impl;
+extern tXcursorNoticePutBitmap XcursorNoticePutBitmap_impl;
+extern tXcursorTryShapeBitmapCursor XcursorTryShapeBitmapCursor_impl;
+extern tXcursorImageHash XcursorImageHash_impl;
+extern tXcursorSupportsARGB XcursorSupportsARGB_impl;
+extern tXcursorSupportsAnim XcursorSupportsAnim_impl;
+extern tXcursorSetDefaultSize XcursorSetDefaultSize_impl;
+extern tXcursorGetDefaultSize XcursorGetDefaultSize_impl;
+extern tXcursorSetTheme XcursorSetTheme_impl;
+extern tXcursorGetTheme XcursorGetTheme_impl;
+extern tXcursorGetThemeCore XcursorGetThemeCore_impl;
+extern tXcursorSetThemeCore XcursorSetThemeCore_impl;
 
 // Xinerama.h
 extern tXineramaQueryExtension XineramaQueryExtension_impl;

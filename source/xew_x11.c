@@ -31,10 +31,12 @@
 static const char* x11_paths[] = {NULL};
 static const char* x11_xcb_paths[] = {NULL};
 static const char* x11_xinerama_paths[] = {NULL};
+static const char* x11_cursor_paths[] = {NULL};
 #elif defined(__APPLE__)
 static const char* x11_paths[] = {NULL};
 static const char* x11_xcb_paths[] = {NULL};
 static const char* x11_xinerama_paths[] = {NULL};
+static const char* x11_cursor_paths[] = {NULL};
 #else
 static const char* x11_paths[] = {"libX11.so.6",
                                   "libX11.so",
@@ -45,11 +47,15 @@ static const char* x11_xcb_paths[] = {"libX11-xcb.so.6",
 static const char* x11_xinerama_paths[] = {"libXinerama.so.1",
                                            "libXinerama.so",
                                            NULL};
+static const char* x11_cursor_paths[] = {"libXcursor.so.1",
+                                         "libXcursor.so",
+                                         NULL};
 #endif
 
 static DynamicLibrary* x11_lib = NULL;
 static DynamicLibrary* x11_xcb_lib = NULL;
 static DynamicLibrary* x11_xinerama_lib = NULL;
+static DynamicLibrary* x11_cursor_lib = NULL;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functor definitions.
@@ -755,6 +761,67 @@ tXUnionRectWithRegion XUnionRectWithRegion_impl;
 tXUnionRegion XUnionRegion_impl;
 tXWMGeometry XWMGeometry_impl;
 tXXorRegion XXorRegion_impl;
+
+// Xcursor.h
+tXcursorImageCreate XcursorImageCreate_impl;
+tXcursorImageDestroy XcursorImageDestroy_impl;
+tXcursorImagesCreate XcursorImagesCreate_impl;
+tXcursorImagesDestroy XcursorImagesDestroy_impl;
+tXcursorImagesSetName XcursorImagesSetName_impl;
+tXcursorCursorsCreate XcursorCursorsCreate_impl;
+tXcursorCursorsDestroy XcursorCursorsDestroy_impl;
+tXcursorAnimateCreate XcursorAnimateCreate_impl;
+tXcursorAnimateDestroy XcursorAnimateDestroy_impl;
+tXcursorAnimateNext XcursorAnimateNext_impl;
+tXcursorCommentCreate XcursorCommentCreate_impl;
+tXcursorCommentDestroy XcursorCommentDestroy_impl;
+tXcursorCommentsCreate XcursorCommentsCreate_impl;
+tXcursorCommentsDestroy XcursorCommentsDestroy_impl;
+tXcursorXcFileLoadImage XcursorXcFileLoadImage_impl;
+tXcursorXcFileLoadImages XcursorXcFileLoadImages_impl;
+tXcursorXcFileLoadAllImages XcursorXcFileLoadAllImages_impl;
+tXcursorXcFileLoad XcursorXcFileLoad_impl;
+tXcursorXcFileSave XcursorXcFileSave_impl;
+tXcursorFileLoadImage XcursorFileLoadImage_impl;
+tXcursorFileLoadImages XcursorFileLoadImages_impl;
+tXcursorFileLoadAllImages XcursorFileLoadAllImages_impl;
+tXcursorFileLoad XcursorFileLoad_impl;
+tXcursorFileSaveImages XcursorFileSaveImages_impl;
+tXcursorFileSave XcursorFileSave_impl;
+tXcursorFilenameLoadImage XcursorFilenameLoadImage_impl;
+tXcursorFilenameLoadImages XcursorFilenameLoadImages_impl;
+tXcursorFilenameLoadAllImages XcursorFilenameLoadAllImages_impl;
+tXcursorFilenameLoad XcursorFilenameLoad_impl;
+tXcursorFilenameSaveImages XcursorFilenameSaveImages_impl;
+tXcursorFilenameSave XcursorFilenameSave_impl;
+tXcursorLibraryLoadImage XcursorLibraryLoadImage_impl;
+tXcursorLibraryLoadImages XcursorLibraryLoadImages_impl;
+tXcursorLibraryPath XcursorLibraryPath_impl;
+tXcursorLibraryShape XcursorLibraryShape_impl;
+tXcursorImageLoadCursor XcursorImageLoadCursor_impl;
+tXcursorImagesLoadCursors XcursorImagesLoadCursors_impl;
+tXcursorImagesLoadCursor XcursorImagesLoadCursor_impl;
+tXcursorFilenameLoadCursor XcursorFilenameLoadCursor_impl;
+tXcursorFilenameLoadCursors XcursorFilenameLoadCursors_impl;
+tXcursorLibraryLoadCursor XcursorLibraryLoadCursor_impl;
+tXcursorLibraryLoadCursors XcursorLibraryLoadCursors_impl;
+tXcursorShapeLoadImage XcursorShapeLoadImage_impl;
+tXcursorShapeLoadImages XcursorShapeLoadImages_impl;
+tXcursorShapeLoadCursor XcursorShapeLoadCursor_impl;
+tXcursorShapeLoadCursors XcursorShapeLoadCursors_impl;
+tXcursorTryShapeCursor XcursorTryShapeCursor_impl;
+tXcursorNoticeCreateBitmap XcursorNoticeCreateBitmap_impl;
+tXcursorNoticePutBitmap XcursorNoticePutBitmap_impl;
+tXcursorTryShapeBitmapCursor XcursorTryShapeBitmapCursor_impl;
+tXcursorImageHash XcursorImageHash_impl;
+tXcursorSupportsARGB XcursorSupportsARGB_impl;
+tXcursorSupportsAnim XcursorSupportsAnim_impl;
+tXcursorSetDefaultSize XcursorSetDefaultSize_impl;
+tXcursorGetDefaultSize XcursorGetDefaultSize_impl;
+tXcursorSetTheme XcursorSetTheme_impl;
+tXcursorGetTheme XcursorGetTheme_impl;
+tXcursorGetThemeCore XcursorGetThemeCore_impl;
+tXcursorSetThemeCore XcursorSetThemeCore_impl;
 
 // Xinerama.h
 tXineramaQueryExtension XineramaQueryExtension_impl;
@@ -4398,6 +4465,257 @@ int XXorRegion(Region sra, Region srb, Region dr_return) {
   return XXorRegion_impl(sra, srb, dr_return);
 }
 
+// Xcursor.h
+XcursorImage* XcursorImageCreate(int width, int height) {
+  return XcursorImageCreate_impl(width, height);
+}
+
+void XcursorImageDestroy(XcursorImage* image) {
+  return XcursorImageDestroy_impl(image);
+}
+
+XcursorImages* XcursorImagesCreate(int size) {
+  return XcursorImagesCreate_impl(size);
+}
+
+void XcursorImagesDestroy(XcursorImages* images) {
+  return XcursorImagesDestroy_impl(images);
+}
+
+void XcursorImagesSetName(XcursorImages* images, const char* name) {
+  return XcursorImagesSetName_impl(images, name);
+}
+
+XcursorCursors* XcursorCursorsCreate(Display* dpy, int size) {
+  return XcursorCursorsCreate_impl(dpy, size);
+}
+
+void XcursorCursorsDestroy(XcursorCursors* cursors) {
+  return XcursorCursorsDestroy_impl(cursors);
+}
+
+XcursorAnimate* XcursorAnimateCreate(XcursorCursors* cursors) {
+  return XcursorAnimateCreate_impl(cursors);
+}
+
+void XcursorAnimateDestroy(XcursorAnimate* animate) {
+  return XcursorAnimateDestroy_impl(animate);
+}
+
+Cursor XcursorAnimateNext(XcursorAnimate* animate) {
+  return XcursorAnimateNext_impl(animate);
+}
+
+XcursorComment* XcursorCommentCreate(XcursorUInt comment_type, int length) {
+  return XcursorCommentCreate_impl(comment_type, length);
+}
+
+void XcursorCommentDestroy(XcursorComment* comment) {
+  return XcursorCommentDestroy_impl(comment);
+}
+
+XcursorComments* XcursorCommentsCreate(int size) {
+  return XcursorCommentsCreate_impl(size);
+}
+
+void XcursorCommentsDestroy(XcursorComments* comments) {
+  return XcursorCommentsDestroy_impl(comments);
+}
+
+XcursorImage* XcursorXcFileLoadImage(XcursorFile* file, int size) {
+  return XcursorXcFileLoadImage_impl(file, size);
+}
+
+XcursorImages* XcursorXcFileLoadImages(XcursorFile* file, int size) {
+  return XcursorXcFileLoadImages_impl(file, size);
+}
+
+XcursorImages* XcursorXcFileLoadAllImages(XcursorFile* file) {
+  return XcursorXcFileLoadAllImages_impl(file);
+}
+
+XcursorBool XcursorXcFileLoad(XcursorFile* file, XcursorComments** commentsp, XcursorImages** imagesp) {
+  return XcursorXcFileLoad_impl(file, commentsp, imagesp);
+}
+
+XcursorBool XcursorXcFileSave(XcursorFile* file, const XcursorComments* comments, const XcursorImages* images) {
+  return XcursorXcFileSave_impl(file, comments, images);
+}
+
+XcursorImage* XcursorFileLoadImage(FILE* file, int size) {
+  return XcursorFileLoadImage_impl(file, size);
+}
+
+XcursorImages* XcursorFileLoadImages(FILE* file, int size) {
+  return XcursorFileLoadImages_impl(file, size);
+}
+
+XcursorImages* XcursorFileLoadAllImages(FILE* file) {
+  return XcursorFileLoadAllImages_impl(file);
+}
+
+XcursorBool XcursorFileLoad(FILE* file, XcursorComments** commentsp, XcursorImages** imagesp) {
+  return XcursorFileLoad_impl(file, commentsp, imagesp);
+}
+
+XcursorBool XcursorFileSaveImages(FILE* file, const XcursorImages* images) {
+  return XcursorFileSaveImages_impl(file, images);
+}
+
+XcursorBool XcursorFileSave(FILE* file, const XcursorComments* comments, const XcursorImages* images) {
+  return XcursorFileSave_impl(file, comments, images);
+}
+
+XcursorImage* XcursorFilenameLoadImage(const char* filename, int size) {
+  return XcursorFilenameLoadImage_impl(filename, size);
+}
+
+XcursorImages* XcursorFilenameLoadImages(const char* filename, int size) {
+  return XcursorFilenameLoadImages_impl(filename, size);
+}
+
+XcursorImages* XcursorFilenameLoadAllImages(const char* filename) {
+  return XcursorFilenameLoadAllImages_impl(filename);
+}
+
+XcursorBool XcursorFilenameLoad(const char* file, XcursorComments** commentsp, XcursorImages** imagesp) {
+  return XcursorFilenameLoad_impl(file, commentsp, imagesp);
+}
+
+XcursorBool XcursorFilenameSaveImages(const char* filename, const XcursorImages* images) {
+  return XcursorFilenameSaveImages_impl(filename, images);
+}
+
+XcursorBool XcursorFilenameSave(const char* file, const XcursorComments* comments, const XcursorImages* images) {
+  return XcursorFilenameSave_impl(file, comments, images);
+}
+
+XcursorImage* XcursorLibraryLoadImage(const char* library, const char* theme, int size) {
+  return XcursorLibraryLoadImage_impl(library, theme, size);
+}
+
+XcursorImages* XcursorLibraryLoadImages(const char* library, const char* theme, int size) {
+  return XcursorLibraryLoadImages_impl(library, theme, size);
+}
+
+const char* XcursorLibraryPath(void) {
+  return XcursorLibraryPath_impl();
+}
+
+int XcursorLibraryShape(const char* library) {
+  return XcursorLibraryShape_impl(library);
+}
+
+Cursor XcursorImageLoadCursor(Display* dpy, const XcursorImage* image) {
+  return XcursorImageLoadCursor_impl(dpy, image);
+}
+
+XcursorCursors* XcursorImagesLoadCursors(Display* dpy, const XcursorImages* images) {
+  return XcursorImagesLoadCursors_impl(dpy, images);
+}
+
+Cursor XcursorImagesLoadCursor(Display* dpy, const XcursorImages* images) {
+  return XcursorImagesLoadCursor_impl(dpy, images);
+}
+
+Cursor XcursorFilenameLoadCursor(Display* dpy, const char* file) {
+  return XcursorFilenameLoadCursor_impl(dpy, file);
+}
+
+XcursorCursors* XcursorFilenameLoadCursors(Display* dpy, const char* file) {
+  return XcursorFilenameLoadCursors_impl(dpy, file);
+}
+
+Cursor XcursorLibraryLoadCursor(Display* dpy, const char* file) {
+  return XcursorLibraryLoadCursor_impl(dpy, file);
+}
+
+XcursorCursors* XcursorLibraryLoadCursors(Display* dpy, const char* file) {
+  return XcursorLibraryLoadCursors_impl(dpy, file);
+}
+
+XcursorImage* XcursorShapeLoadImage(unsigned int shape, const char* theme, int size) {
+  return XcursorShapeLoadImage_impl(shape, theme, size);
+}
+
+XcursorImages* XcursorShapeLoadImages(unsigned int shape, const char* theme, int size) {
+  return XcursorShapeLoadImages_impl(shape, theme, size);
+}
+
+Cursor XcursorShapeLoadCursor(Display* dpy, unsigned int shape) {
+  return XcursorShapeLoadCursor_impl(dpy, shape);
+}
+
+XcursorCursors* XcursorShapeLoadCursors(Display* dpy, unsigned int shape) {
+  return XcursorShapeLoadCursors_impl(dpy, shape);
+}
+
+Cursor XcursorTryShapeCursor(
+    Display* dpy,
+    Font source_font,
+    Font mask_font,
+    unsigned int source_char,
+    unsigned int mask_char,
+    XColor _Xconst* foreground,
+    XColor _Xconst* background) {
+  return XcursorTryShapeCursor_impl(dpy, source_font, mask_font, source_char, mask_char, foreground, background);
+}
+
+void XcursorNoticeCreateBitmap(Display* dpy, Pixmap pid, unsigned int width, unsigned int height) {
+  return XcursorNoticeCreateBitmap_impl(dpy, pid, width, height);
+}
+
+void XcursorNoticePutBitmap(Display* dpy, Drawable draw, XImage* image) {
+  return XcursorNoticePutBitmap_impl(dpy, draw, image);
+}
+
+Cursor XcursorTryShapeBitmapCursor(
+    Display* dpy,
+    Pixmap source,
+    Pixmap mask,
+    XColor* foreground,
+    XColor* background,
+    unsigned int x,
+    unsigned int y) {
+  return XcursorTryShapeBitmapCursor_impl(dpy, source, mask, foreground, background, x, y);
+}
+
+void XcursorImageHash(XImage* image, unsigned char hash [XCURSOR_BITMAP_HASH_SIZE]) {
+  return XcursorImageHash_impl(image, hash);
+}
+
+XcursorBool XcursorSupportsARGB(Display* dpy) {
+  return XcursorSupportsARGB_impl(dpy);
+}
+
+XcursorBool XcursorSupportsAnim(Display* dpy) {
+  return XcursorSupportsAnim_impl(dpy);
+}
+
+XcursorBool XcursorSetDefaultSize(Display* dpy, int size) {
+  return XcursorSetDefaultSize_impl(dpy, size);
+}
+
+int XcursorGetDefaultSize(Display* dpy) {
+  return XcursorGetDefaultSize_impl(dpy);
+}
+
+XcursorBool XcursorSetTheme(Display* dpy, const char* theme) {
+  return XcursorSetTheme_impl(dpy, theme);
+}
+
+char* XcursorGetTheme(Display* dpy) {
+  return XcursorGetTheme_impl(dpy);
+}
+
+XcursorBool XcursorGetThemeCore(Display* dpy) {
+  return XcursorGetThemeCore_impl(dpy);
+}
+
+XcursorBool XcursorSetThemeCore(Display* dpy, XcursorBool theme_core) {
+  return XcursorSetThemeCore_impl(dpy, theme_core);
+}
+
 // Xinerama.h
 Bool XineramaQueryExtension(Display* dpy, int* event_base, int* error_base) {
   return XineramaQueryExtension_impl(dpy, event_base, error_base);
@@ -4447,6 +4765,7 @@ static XewErrorCode openLibraries() {
     return XEW_ERROR_OPEN_FAILED;
   }
   x11_xinerama_lib = xew_dynamic_library_open_find(x11_xinerama_paths);
+  x11_cursor_lib = xew_dynamic_library_open_find(x11_cursor_paths);
   return XEW_SUCCESS;
 }
 
@@ -5148,6 +5467,66 @@ static void fetchPointersFromLibrary(void) {
   _LIBRARY_FIND_IMPL(x11_lib, XUnionRegion);
   _LIBRARY_FIND_IMPL(x11_lib, XWMGeometry);
   _LIBRARY_FIND_IMPL(x11_lib, XXorRegion);
+  // Xcursor.h
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImageCreate);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImageDestroy);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImagesCreate);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImagesDestroy);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImagesSetName);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorCursorsCreate);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorCursorsDestroy);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorAnimateCreate);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorAnimateDestroy);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorAnimateNext);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorCommentCreate);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorCommentDestroy);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorCommentsCreate);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorCommentsDestroy);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorXcFileLoadImage);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorXcFileLoadImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorXcFileLoadAllImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorXcFileLoad);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorXcFileSave);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFileLoadImage);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFileLoadImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFileLoadAllImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFileLoad);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFileSaveImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFileSave);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameLoadImage);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameLoadImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameLoadAllImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameLoad);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameSaveImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameSave);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorLibraryLoadImage);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorLibraryLoadImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorLibraryPath);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorLibraryShape);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImageLoadCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImagesLoadCursors);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImagesLoadCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameLoadCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorFilenameLoadCursors);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorLibraryLoadCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorLibraryLoadCursors);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorShapeLoadImage);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorShapeLoadImages);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorShapeLoadCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorShapeLoadCursors);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorTryShapeCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorNoticeCreateBitmap);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorNoticePutBitmap);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorTryShapeBitmapCursor);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorImageHash);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorSupportsARGB);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorSupportsAnim);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorSetDefaultSize);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorGetDefaultSize);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorSetTheme);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorGetTheme);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorGetThemeCore);
+  _LIBRARY_FIND_IMPL(x11_cursor_lib, XcursorSetThemeCore);
   // Xinerama.h
   _LIBRARY_FIND_IMPL(x11_xinerama_lib, XineramaQueryExtension);
   _LIBRARY_FIND_IMPL(x11_xinerama_lib, XineramaQueryVersion);
