@@ -41,7 +41,7 @@ static const char* x11_cursor_paths[] = {NULL};
 static const char* x11_paths[] = {"libX11.so.6",
                                   "libX11.so",
                                   NULL};
-static const char* x11_xcb_paths[] = {"libX11-xcb.so.6",
+static const char* x11_xcb_paths[] = {"libX11-xcb.so.1",
                                       "libX11-xcb.so",
                                       NULL};
 static const char* x11_xinerama_paths[] = {"libXinerama.so.1",
